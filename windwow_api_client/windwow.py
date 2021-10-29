@@ -1,8 +1,8 @@
 import time
-import openapi_client
+from . import openapi_client
+from .openapi_client.api import default_api
+from .openapi_client.model.inline_object import InlineObject
 from pprint import pprint
-from openapi_client.api import default_api
-from openapi_client.model.inline_object import InlineObject
 # Defining the host is optional and defaults to http://141.85.232.40:9080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openapi_client.Configuration(
@@ -15,7 +15,7 @@ windwow_api_instance = ""
 with openapi_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = default_api.DefaultApi(api_client)
-    setting_name = "luminosity" # str | 
+    setting_name = "luminosity" # str |
     windwow_api_instance = api_instance
 
     try:
