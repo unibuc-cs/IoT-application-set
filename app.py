@@ -5,7 +5,7 @@ import flask
 
 # Import all the apps
 # import app_smarttv
-from windwow_api_client import windwow
+from clients.windwow_api_client import windwow
 
 # app_smarttv.smarttv_api_instance.add_channel_username_canal_post(app_smarttv.username, app_smarttv.canal)
 

@@ -13,5 +13,6 @@
 [submodule "smarteeth"]
 	path = smarteeth
 	url = https://github.com/unibuc-cs/smarteeth
-
-
+[submodule "WindWow"]
+	path = WindWow
+	url = https://github.com/unibuc-cs/WindWow
