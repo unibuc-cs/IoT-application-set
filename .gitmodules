@@ -1,3 +1,18 @@
 [submodule "openapi-generator"]
 	path = openapi-generator
 	url = https://github.com/OpenAPITools/openapi-generator.git
+[submodule "FlowerPower"]
+	path = FlowerPower
+	url = https://github.com/unibuc-cs/FlowerPower
+[submodule "SmartKettle"]
+	path = SmartKettle
+	url = https://github.com/unibuc-cs/SmartKettle
+[submodule "SmartTV-Alpha-X"]
+	path = SmartTV-Alpha-X
+	url = https://github.com/unibuc-cs/SmartTV-Alpha-X
+[submodule "smarteeth"]
+	path = smarteeth
+	url = https://github.com/unibuc-cs/smarteeth
+[submodule "WindWow"]
+	path = WindWow
+	url = https://github.com/unibuc-cs/WindWow
