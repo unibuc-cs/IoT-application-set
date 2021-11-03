@@ -1,6 +1,6 @@
 # smartkettle.DefaultApi
 
-All URIs are relative to *http://141.85.232.40:9082*
+All URIs are relative to *http://141.85.232.40:9080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -16,6 +16,8 @@ Method | HTTP request | Description
 
 
 
+Boils the liquid to a temperature determined by the viscosity of the liquid.
+
 ### Example
 
 
@@ -25,10 +27,10 @@ import smartkettle
 from smartkettle.api import default_api
 from smartkettle.model.inline_response2001 import InlineResponse2001
 from pprint import pprint
-# Defining the host is optional and defaults to http://141.85.232.40:9082
+# Defining the host is optional and defaults to http://141.85.232.40:9080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = smartkettle.Configuration(
-    host = "http://141.85.232.40:9082"
+    host = "http://141.85.232.40:9080"
 )
 
 
@@ -72,7 +74,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **make_tea_post**
-> InlineResponse2002 make_tea_post()
+> InlineResponse2003 make_tea_post()
 
 
 
@@ -84,12 +86,12 @@ import time
 import smartkettle
 from smartkettle.api import default_api
 from smartkettle.model.inline_object import InlineObject
-from smartkettle.model.inline_response2002 import InlineResponse2002
+from smartkettle.model.inline_response2003 import InlineResponse2003
 from pprint import pprint
-# Defining the host is optional and defaults to http://141.85.232.40:9082
+# Defining the host is optional and defaults to http://141.85.232.40:9080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = smartkettle.Configuration(
-    host = "http://141.85.232.40:9082"
+    host = "http://141.85.232.40:9080"
 )
 
 
@@ -98,9 +100,9 @@ with smartkettle.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = default_api.DefaultApi(api_client)
     inline_object = InlineObject(
-        keep_warm=True,
+        keep_warm=False,
         temperature=MakeTeaTemperature(
-            temperature="100",
+            temperature=100,
             scale="C",
         ),
         time=5,
@@ -124,7 +126,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2002**](InlineResponse2002.md)
+[**InlineResponse2003**](InlineResponse2003.md)
 
 ### Authorization
 
@@ -145,9 +147,11 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **stir_liquid_rpm_get**
-> InlineResponse2004 stir_liquid_rpm_get(rpm)
+> InlineResponse2002 stir_liquid_rpm_get(rpm)
 
 
+
+Stir the liquid at a given speed.
 
 ### Example
 
@@ -156,12 +160,12 @@ No authorization required
 import time
 import smartkettle
 from smartkettle.api import default_api
-from smartkettle.model.inline_response2004 import InlineResponse2004
+from smartkettle.model.inline_response2002 import InlineResponse2002
 from pprint import pprint
-# Defining the host is optional and defaults to http://141.85.232.40:9082
+# Defining the host is optional and defaults to http://141.85.232.40:9080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = smartkettle.Configuration(
-    host = "http://141.85.232.40:9082"
+    host = "http://141.85.232.40:9080"
 )
 
 
@@ -188,7 +192,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2004**](InlineResponse2004.md)
+[**InlineResponse2002**](InlineResponse2002.md)
 
 ### Authorization
 
@@ -209,7 +213,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **warm_liquid_by_date_post**
-> InlineResponse2003 warm_liquid_by_date_post()
+> InlineResponse2004 warm_liquid_by_date_post()
 
 
 
@@ -220,13 +224,13 @@ No authorization required
 import time
 import smartkettle
 from smartkettle.api import default_api
-from smartkettle.model.inline_response2003 import InlineResponse2003
+from smartkettle.model.inline_response2004 import InlineResponse2004
 from smartkettle.model.inline_object1 import InlineObject1
 from pprint import pprint
-# Defining the host is optional and defaults to http://141.85.232.40:9082
+# Defining the host is optional and defaults to http://141.85.232.40:9080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = smartkettle.Configuration(
-    host = "http://141.85.232.40:9082"
+    host = "http://141.85.232.40:9080"
 )
 
 
@@ -235,9 +239,9 @@ with smartkettle.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = default_api.DefaultApi(api_client)
     inline_object1 = InlineObject1(
-        recurrent=True,
+        recurrent=False,
         temperature=MakeTeaTemperature(
-            temperature="100",
+            temperature=100,
             scale="C",
         ),
         hour="22:30",
@@ -261,7 +265,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2003**](InlineResponse2003.md)
+[**InlineResponse2004**](InlineResponse2004.md)
 
 ### Authorization
 
@@ -286,7 +290,7 @@ No authorization required
 
 
 
-What temperature to warm the liquid at
+Warm the liquid at the specified temperature on the specified scale
 
 ### Example
 
@@ -297,10 +301,10 @@ import smartkettle
 from smartkettle.api import default_api
 from smartkettle.model.inline_response200 import InlineResponse200
 from pprint import pprint
-# Defining the host is optional and defaults to http://141.85.232.40:9082
+# Defining the host is optional and defaults to http://141.85.232.40:9080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = smartkettle.Configuration(
-    host = "http://141.85.232.40:9082"
+    host = "http://141.85.232.40:9080"
 )
 
 
