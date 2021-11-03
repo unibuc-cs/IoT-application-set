@@ -10,6 +10,19 @@ import windwow
 import smarttv
 import smartkettle
 
+# Hostnames for running applications (taken from docker)
+"""
+      - "flowerpower"
+      - "smarteeth"
+      - "windwow"
+      - "smarttv"
+      - "smartkettle"
+"""
+
+from os import system
+system("ping flowerpower")
+exit()
+
 class general_environment:
     now = 0
     luminosity = 30
