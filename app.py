@@ -5,10 +5,10 @@ import flask
 from pprint import pprint
 
 # Import all the apps
-# import app_smarttv
-from clients import windwow
-from clients import smarttv
-from clients import smartkettle
+# import smarttv
+import windwow
+import smarttv
+import smartkettle
 
 class general_environment:
     now = 0
