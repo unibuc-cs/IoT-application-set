@@ -1,6 +1,3 @@
-[submodule "openapi-generator"]
-	path = openapi-generator
-	url = https://github.com/OpenAPITools/openapi-generator.git
 [submodule "FlowerPower"]
 	path = FlowerPower
 	url = https://github.com/unibuc-cs/FlowerPower
