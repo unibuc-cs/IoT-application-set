@@ -20,4 +20,5 @@ COPY ./requirements.txt .
 RUN python3 -m pip install -r requirements.txt
 
 COPY app.py .
-CMD [ "python3", "./app.py" ]
+CMD ["bash"]
+#CMD [ "python3", "./app.py" ]
