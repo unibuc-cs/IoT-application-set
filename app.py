@@ -1,85 +1,159 @@
-import sys
-import threading
+#!/usr/bin/python3
+
 from datetime import datetime
-import flask
+from typing import List
 from pprint import pprint
 from time import sleep
 
+# ------------------------------------------------------------------------------
 # Import all the apps
+# TODO: this code could be automatically generated
 import windwow
 from windwow.api import default_api as windwow_default_api
+from windwow.api.default_api import DefaultApi as WindwowDefaultApi
+
+def get_windwow_api() -> WindwowDefaultApi:
+    print(f"Instanciate API client for windwow")
+    configuration = windwow.Configuration(host = f"http://windwow:9080")
+    api_client = windwow.ApiClient(configuration)
+    return windwow_default_api.DefaultApi(api_client)
+
 import smarttv
 from smarttv.api import default_api as smarttv_default_api
+from smarttv.api.default_api import DefaultApi as SmarttvDefaultApi
+
+def get_smarttv_api() -> SmarttvDefaultApi:
+    print(f"Instanciate API client for smarttv")
+    configuration = smarttv.Configuration(host = f"http://smarttv:9080")
+    api_client = smarttv.ApiClient(configuration)
+    return smarttv_default_api.DefaultApi(api_client)
+
 import smartkettle
 from smartkettle.api import default_api as smartkettle_default_api
+from smartkettle.api.default_api import DefaultApi as SmartkettleDefaultApi
+
+def get_smartkettle_api() -> SmartkettleDefaultApi:
+    print(f"Instanciate API client for smartkettle")
+    configuration = smartkettle.Configuration(host = f"http://smartkettle:9080")
+    api_client = smartkettle.ApiClient(configuration)
+    return smartkettle_default_api.DefaultApi(api_client)
+
 import flowerpower
 from flowerpower.api import default_api as flowerpower_default_api
- 
-# Hostnames (inside docker) are the same as client libs names
-def get_api_instance(lib, api):
-    print(f"Instanciate API client for {lib.__name__}")
-    configuration = lib.Configuration(host = f"http://{lib.__name__}:9080")
-    api_client = lib.ApiClient(configuration)
-    return api.DefaultApi(api_client)
+from flowerpower.api.default_api import DefaultApi as FlowerpowerDefaultApi
+from flowerpower.model.setting_name import SettingName
 
-windwow_api_instance = get_api_instance(windwow, windwow_default_api)
-smartkettle_api_instance = get_api_instance(smartkettle, smartkettle_default_api)
+def get_flowerpower_api() -> FlowerpowerDefaultApi:
+    print(f"Instanciate API client for flowerpower")
+    configuration = flowerpower.Configuration(host = f"http://flowerpower:9080")
+    api_client = flowerpower.ApiClient(configuration)
+    return flowerpower_default_api.DefaultApi(api_client)
 
-class general_environment:
-    now = 0
-    luminosity = 30
+import smarteeth
+from smarteeth.api import default_api as smarteeth_default_api
+from smarteeth.api.default_api import DefaultApi as SmarteethDefaultApi
 
-    def __init__(self):
-        # Var init
+def get_smarteeth_api() -> SmarteethDefaultApi:
+    print(f"Instanciate API client for smarteeth")
+    configuration = smarteeth.Configuration(host = f"http://smarteeth:9080")
+    api_client = smarteeth.ApiClient(configuration)
+    return smarteeth_default_api.DefaultApi(api_client)
+# ------------------------------------------------------------------------------
+
+
+class Environment:
+    def __init__(self, rules: List[callable], interval = 5):
+        self.rules = rules
         self.now = datetime.now()
+        self.interval = interval
 
-        # Proceses init
-        self.set_time()
+        self.data = {
+            "windwow": {},
+            "smartkettle": {},
+            "flowerpower": {},
+            "smarteeth": {},
+            "smarttv": {},
+        }
 
-    def set_time(self):
-        self.now = datetime.now()
+        self.clients = {
+            "windwow": get_windwow_api(),
+            "smartkettle": get_smartkettle_api(),
+            "flowerpower": get_flowerpower_api(),
+            "smarteeth": get_smarteeth_api(),
+            "smarttv": get_smarttv_api(),
+        }
 
-    def print_env_values(self):
-        return "Current Time =" + self.now.strftime("%H:%M:%S")
+    def run(self):
+        print("Hub app started.")
+        sleep(3)
+        while True:
+            self.now = datetime.now()
 
-env = general_environment();
+            for rule in self.rules:
+                rule(self)
 
-print("Wait 5 seconds before starting (so we are sure that all apps started)")
-sleep(5)
+            self.print_env()
+            sleep(self.interval)
 
-#### 
-## Test Case 1 - Get luminosity from WindWow and stir SmartKettle with the value of the luminosity
-print ("Test case 1")
 
-## Prerequisite environment values
+    def print_env(self):
+        print(f"New environment at: f{self.now}")
+        pprint(self.data)
+        print()
 
-# Set default environment luminosity value
-set_luminosity = windwow_api_instance.settings_setting_name_setting_value_post("luminosity",env.luminosity)
-print(f"settings_setting_name_setting_value_post: {set_luminosity}")
+# Collect data from sensors
+def gather_data(env: Environment):
+    luminosity_raw = env.clients["windwow"].settings_setting_name_get("luminosity", _check_return_type=False)
+    env.data["windwow"]["luminosity"] = float(luminosity_raw[14:])
 
-##
+    # error here
+    #env.data["smarteeth"]["gum_bleeding"] = env.clients["smarteeth"].health_gum_bleeding_get()
+    #print ('gum', env.data["smarteeth"]["gum_bleeding"])
 
-## Test Scenario
+    # error here
+    #temperature_raw = env.clients["flowerpower"].settings_setting_name_get(SettingName('temperature'), _check_return_type=False)
+    #temperature = float(temperature_raw)
+    #env.data["flowerpower"]["temperature"] = temperature
 
-# Get luminosity
-get_luminosity = windwow_api_instance.settings_setting_name_get("luminosity")
-print(f"settings_setting_name_get: {get_luminosity}")
+# If window luminosity is X, then set Kettle RPM to X.
+def rule1(env: Environment):
+    print("Rule 1")
+    print(f"Window luminosity is f{env.data['windwow']['luminosity']}")
 
-# Parse luminosity and save it as a general environment value
-env.luminosity = int(get_luminosity[14:16])
+    env.clients["smartkettle"].stir_liquid_rpm_get(int(env.data["windwow"]["luminosity"]))
+    env.data["smartkettle"]["rpm"] = int(env.data["windwow"]["luminosity"])
+    print(f"Kettle RPM was set to {int(env.data['windwow']['luminosity'])}")
 
-# Set the stir of SmartKettle
-stir_liquid_rpm_get_response = smartkettle_api_instance.stir_liquid_rpm_get(env.luminosity)
-print(f"stir_liquid_rpm_get_response: {stir_liquid_rpm_get_response}")
+# If plant temperature is above 30 degrees, reduce the luminosity of the window to half
+def rule2(env: Environment):
+    print("Rule 2")
 
-####
+    if env.data["flowerpower"]["temperature"] < 30:
+        print("Nothing to do")
+        return
 
-pprint(get_luminosity)
-pprint(stir_liquid_rpm_get_response)
+    old = env.data["windwow"]["luminosity"]
+    env.data["windwow"]["luminosity"] /= 2
+    env.clients["windwow"].settings_setting_name_setting_value_post("luminosity", env.data["windwow"]["luminosity"])
+    env.clients["flowerpower"].settings_setting_name_setting_value_put(SettingName("luminosity"), env.data["windwow"]["luminosity"])
+    print(f"Luminosity changed from {old} to {env.data['windwow']['luminosity']}")
 
-# app = flask.Flask(__name__)
+def rule3(env: Environment):
+    print("Rule 3")
 
-# @app.route("/")
-# def print_env():
-#     return env.print_env_values()
+def rule4(env: Environment):
+    print("Rule 4")
+
+def rule5(env: Environment):
+    print("Rule 5")
+
+env = Environment([
+    gather_data,
+    rule1,
+    #rule2,
+    rule3,
+    rule4,
+    rule5,
+])
+env.run()
 

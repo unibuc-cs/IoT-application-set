@@ -9,3 +9,4 @@ wheel==0.37.0
 ./clients/smarttv
 ./clients/windwow
 ./clients/smartkettle
+./clients/smarteeth
