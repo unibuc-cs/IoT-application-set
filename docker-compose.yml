@@ -1,0 +1,64 @@
+version: '3.3'
+services:
+  flowerpower:
+    ports:
+        - '9081:9080'
+    restart: always
+    image: thelittlewho/flowerpower:latest
+    depends_on:
+      - "mqtt_server"
+
+  smartkettle:
+    ports:
+        - '9082:9080'
+    restart: always
+    image: thelittlewho/smartkettle:latest
+    depends_on:
+      - "mqtt_server"
+
+  smarttv:
+    ports:
+        - '9083:9080'
+    restart: always
+    image: thelittlewho/smarttv:latest
+    depends_on:
+      - "mqtt_server"
+
+  windwow:
+    ports:
+        - '9084:9080'
+    restart: always
+    image: thelittlewho/windwow:latest
+    depends_on:
+        - "mqtt_server"
+  smarteeth:
+    ports:
+        - '9085:9080'
+    restart: always
+    image: thelittlewho/smarteeth:latest
+    depends_on:
+        - "mqtt_server"
+
+  mqtt_server:
+    image: eclipse-mosquitto
+    ports:
+      - 9883:1883
+      - 10001:9001
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_logs:/mosquitto/log 
+
+  hub_app:
+    image: thelittlewho/hub_app:latest
+    depends_on:
+      - "flowerpower"
+      - "smarteeth"
+      - "windwow"
+      - "smarttv"
+      - "smartkettle"
+
+volumes:
+  mosquitto_data:
+  mosquitto_logs:
+      
