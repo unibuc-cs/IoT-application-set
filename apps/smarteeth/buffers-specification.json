@@ -1,0 +1,164 @@
+{
+  "device-name": "Smarteeth",
+  "device-type": "Toothbrush",
+  "buffers-count": 1,
+  "input-buffers": {
+    "1": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -XPOST 'http://127.0.0.1:9080/configuration'",
+      "buffer-tokens": [
+        {
+          "name": "Configuration data",
+          "description": "",
+          "token-type": "string",
+          "byte-size": 128,
+          "regex-rule": "{\"name\": \"[A-z]+\", \"age\": [1-9][0-9]*, \"program\": [0-4], \"teeth\": \\[(([0-9]+, )*)[0-9]+\\]}",
+          "optional": false
+        }
+      ]
+    },
+    "2": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -XPOST 'http://127.0.0.1:9080/brushing/conditions'",
+      "buffer-tokens": [
+        {
+          "name": "Condition name",
+          "description": "",
+          "token-type": "string",
+          "byte-size": 10,
+          "regex-rule": "[a-z]+",
+          "optional": false
+        },
+        {
+          "name": "Condition value",
+          "description": "",
+          "token-type": "string",
+          "byte-size": 4,
+          "regex-rule": "[0-9]+",
+          "optional": false
+        }
+      ]
+    },
+    "3": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -XPOST 'http://127.0.0.1:9080/brushing'",
+      "buffer-tokens": [
+        {
+          "name": "Action",
+          "description": "",
+          "token-type": "string",
+          "byte-size": 10,
+          "regex-rule": "start|stop|move",
+          "optional": false
+        },
+        {
+          "name": "Config name",
+          "description": "",
+          "token-type": "string",
+          "byte-size": 10,
+          "regex-rule": "[A-z]+",
+          "optional": true
+        }
+      ]
+    },
+    "4": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -XPOST 'http://127.0.0.1:9080/health'",
+      "buffer-tokens": [
+        {
+          "name": "Action",
+          "description": "",
+          "token-type": "string",
+          "byte-size": 10,
+          "regex-rule": "toothColor",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "description": "",
+          "token-type": "string",
+          "byte-size": 4,
+          "regex-rule": "[0-9]+",
+          "optional": false
+        }
+      ]
+    }
+  },
+  "output-buffers": {
+    "1": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -XGET 'http://127.0.0.1:9080/configuration'",
+      "buffer-tokens": [
+        {
+          "name": "Config name",
+          "description": "Name of the configuration",
+          "token-type": "string",
+          "byte-size": 10,
+          "regex-rule": "[a-zA-Z]*",
+          "optional": false
+        }
+      ]
+    },
+    "2": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -XGET 'http://127.0.0.1.:9080/brushing/conditions'",
+      "buffer-tokens": [
+        {
+          "name": "Check token",
+          "description": "",
+          "byte-size": 10,
+          "regex-rule": "check",
+          "optional": false
+        }
+      ]
+    },
+    "3": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -XGET 'http://127.0.0.1.:9080/brushing'",
+      "buffer-tokens": [
+        {
+          "name": "Value name",
+          "description": "",
+          "byte-size": 10,
+          "regex-rule": "direction|check|time",
+          "optional": false
+        }
+      ]
+    },
+    "4": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -XGET 'http://127.0.0.1.:9080/health'",
+      "buffer-tokens": [
+        {
+          "name": "Health indicator",
+          "description": "",
+          "byte-size": 10,
+          "regex-rule": "tartrum|gumBleeding",
+          "optional": false
+        }
+      ]
+    },
+    "5": {
+      "token-delimitators": "",
+      "protocol": "HTTP",
+      "prefix": "curl -XGET 'http://127.0.0.1.:9080/statistics'",
+      "buffer-tokens": [
+        {
+          "name": "User name",
+          "description": "",
+          "byte-size": 10,
+          "regex-rule": "[A-z]+",
+          "optional": false
+        }
+      ]
+    }
+  }
+}

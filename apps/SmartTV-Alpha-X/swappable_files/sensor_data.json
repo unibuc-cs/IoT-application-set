@@ -1,0 +1,39 @@
+{
+    "input_buffer":{
+        "settings":{
+            "token_delimitators":"",
+            "protocol":"HTTP",
+            "method":"POST",
+            "prefix":"localhost:9080/sensor",
+            "buffer-tokens":[
+                {
+                    "name": "luminosity",
+                    "description": "Sensor that gives luminosity",
+                    "value": "90",
+                    "token_type":"string",
+                    "byte_size":256,
+                    "regex-rule":"[a-zA-Z]",
+                    "optional":false
+                },
+                {
+                    "name": "distance",
+                    "description": "Sensor that gives distance from the TV",
+                    "value": "90",
+                    "token_type":"string",
+                    "byte_size":256,
+                    "regex-rule":"[a-zA-Z]",
+                    "optional":false
+                },
+                {
+                    "name": "temperature",
+                    "description": "Sensor that gives temperature",
+                    "value": "2",
+                    "token_type":"string",
+                    "byte_size":256,
+                    "regex-rule":"[a-zA-Z]",
+                    "optional":false
+                }
+            ]
+        }
+    }
+}

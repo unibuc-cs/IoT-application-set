@@ -1,0 +1,133 @@
+{
+    "device-id": "0",
+    "device-name": "Not so smart flower pot",
+    "device-type": "Flower pot",
+    "description": "The newest smart flower pot on the market. Not the smartest, but good enough.",
+    "buffers-count": "3",
+    "input-buffers": {
+        "1": {
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -XPUT 'http://127.0.0.1:9080/settings'",
+            "buffer-tokens": [
+                {
+                    "name": "configuraionSettings",
+                    "description": "Get status of a pot's property",
+                    "token-type": "string",
+                    "byte-size": 128,
+                    "regex-rule": "{\"sensorType\": \"[1-4]\", \"min\": \"[-.0-9]+\", \"max\": \"[-.0-9]+\", \"nutrientType\": \"null|[a-zA-Z]*\"}",
+                    "optional": false
+                }
+            ]
+        },
+        "2": {
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -XPUT 'http://127.0.0.1:9080/plantType'",
+            "buffer-tokens": [
+                {
+                    "name": "plantType",
+                    "description": "Update for information regarding plant.",
+                    "token-type": "string",
+                    "byte-size": 128,
+                    "regex-rule": "{\"sensorType\": \"[1-4]\", \"species\": \"[a-zA-Z]+\", \"color\": \"[a-zA-Z]+\", \"type\": \"[a-zA-Z]+\", \"height\": \"[0-9]+\"}",
+                    "optional": false
+                }
+            ]
+        },
+        "3": {
+            "token-delimitators": "",
+            "protocol": "MQTT",
+            "prefix": "mosquitto_pub -h '127.0.0.1' -p 1883 -t 'test' -m",
+            "buffer-tokens": [
+                {
+                    "name": "plantType",
+                    "description": "Update for information regarding plant.",
+                    "token-type": "string",
+                    "byte-size": 64,
+                    "regex-rule": "{\"sensorType\": \"[1-4]\", \"value\": \"[0-9]+\", \"nutrientType\": \"null|[a-zA-Z]*\"}",
+                    "optional": false
+                }
+            ]
+        }
+    },
+    "outout-buffers": {
+        "1": {
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -XGET 'http://127.0.0.1:9080/:action'",
+            "buffer-tokens": [
+                {
+                    "name": "loosenSoil",
+                    "description": "Automatic soil loosener with lopatica",
+                    "token-type": "string",
+                    "byte-size": 8,
+                    "regex-rule": "[0|1]",
+                    "optional": false
+                },
+                {
+                    "name": "changeSoil",
+                    "description": "Change soil analyzer",
+                    "token-type": "string",
+                    "byte-size": 8,
+                    "regex-rule": "[0|1]",
+                    "optional": false
+                },
+                {
+                    "name": "irrigationSoil",
+                    "description": "Automatic irrigation system",
+                    "token-type": "string",
+                    "byte-size": 8,
+                    "regex-rule": "[0|1]",
+                    "optional": false
+                },
+                {
+                    "name": "injectMinerals",
+                    "description": "Automatic soil injector",
+                    "token-type": "string",
+                    "byte-size": 8,
+                    "regex-rule": "[0|1]",
+                    "optional": false
+                },
+                {
+                    "name": "activateSolarLamp",
+                    "description": "Add solar lamp option",
+                    "token-type": "string",
+                    "byte-size": 8,
+                    "regex-rule": "[0|1]",
+                    "optional": false
+                }
+            ]
+        },
+        "2": {
+            "token-delimitators": "/",
+            "protocol": "FILE",
+            "prefix": "./status.txt",
+            "buffer-tokens": [
+                {
+                    "name": "status.txt",
+                    "description": "Output a file containing the status of the smart pot",
+                    "token-type": "bytes",
+                    "byte-size": 128,
+                    "regex-rule": "",
+                    "optional": false
+                }
+            ]
+        },
+        "3": {
+            "token-delimitators": "",
+            "protocol": "MQTT",
+            "prefix": "mosquitto_pub -h '127.0.0.1' -p 1883 -t 'test' -m",
+            "buffer-tokens": [
+                {
+                    "name": "publisherResponse",
+                    "description": "response to the value update publish",
+                    "token-type": "string",
+                    "byte-size": 16,
+                    "regex-rule": "[a-zA-Z]*",
+                    "optional": false
+                }
+            ]
+        }
+    }
+}

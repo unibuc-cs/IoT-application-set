@@ -1,0 +1,8 @@
+{
+    "hour": "22:30",
+    "recurrent": false,
+    "temperature": {
+        "scale": "C",
+        "temperature": "100"
+    }
+}

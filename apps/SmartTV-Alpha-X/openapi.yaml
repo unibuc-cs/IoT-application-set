@@ -1,0 +1,278 @@
+openapi: 3.0.0
+info:
+  title: SmartTV-Alpha
+  version: 1.0.0
+servers:
+  - url: http://localhost:9081
+    description: Docker container exposed on localhost with default port.
+paths:
+  /timp-start:
+    get:
+      responses:
+        '200':
+          description: Time from start.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  time:
+                    type: number
+  /timp-last:
+    get:
+      responses:
+        '200':
+          description: Time from last.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  time:
+                    type: number
+  /getUsers:
+    get:
+      responses:
+        '200':
+          description: Array of users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+  /getUsersJSON:
+    get:
+      summary: Loads users into output_users.json file.
+      responses:
+        '200':
+          description: Success message.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Data was loaded
+  /timp-idle/{time}:
+    post:
+      parameters:
+        - name: time
+          in: path
+          schema:
+            type: integer
+            example: 5
+          required: true
+      responses:
+        '200':
+          description: Set idle time duration.
+  /getSuggestedChannels/{gen}/{varsta}:
+    get:
+      parameters:
+        - name: gen
+          in: path
+          required: true
+          schema:
+            type: string
+            example: actiune
+        - name: varsta
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 19
+      responses:
+        '200':
+          description: List of suggested channels.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  channels:
+                    type: string
+                    example: channel1,channel2,channel3
+  /getHistoryAndRecommandations/{nume}:
+    get:
+      parameters:
+        - name: nume
+          in: path
+          required: true
+          schema:
+            type: string
+            example: film_bun
+      responses:
+        '200':
+          description: Object containing the history and suggested channels.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  istoric:
+                    example: {"film": 0, "film1": 1}
+                    type: object
+                  canale recomandate:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: string
+                    example: [["gen", "film"]]
+  /insertUser/{username}/{varsta}:
+    post:
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+            example: ionel
+        - name: varsta
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 19
+      responses:
+        '200':
+          description: Success message
+        '400':
+          description: User already exists.
+          content:
+            application/json:
+              schema: 
+                type: string
+                example: Utilizatorul exista deja
+  /addChannel/{username}/{canal}:
+    post:
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+            example: ionel
+        - name: canal
+          in: path
+          required: true
+          schema:
+            type: string
+            example: nasultv
+      responses:
+        '200':
+          description: Success message.
+  /setBrightness/{level}:
+    post:
+      parameters:
+        - name: level
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 3
+            minimum: 0
+            maximum: 100
+      responses:
+        '200':
+          description: The new level.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  new_brightness:
+                    type: integer
+                    example: 5
+                    minimum: 0
+                    maximum: 100
+        '400':
+          description: Invalid brightness level.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: The brigthness should be between 0 and 100
+  /notificationDistance/{size}/{current_distance}:
+    get:
+      parameters:
+        - name: size
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 7
+        - name: current_distance
+          in: path
+          required: true
+          schema:
+            type: number
+            example: 2.5
+      responses:
+        '200':
+          description: New notification distance.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  notification_message:
+                    type: string
+  /setBrightnessSensor:
+    post:
+      summary: Loads brightness from file.
+      responses:
+        '200':
+          description: The new level.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  new_brightness:
+                    type: integer
+                    example: 5
+                    minimum: 0
+                    maximum: 100
+        '400':
+          description: Invalid brightness level.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: The brigthness should be between 0 and 100
+  /setBrightnessOurSensor:
+    post:
+      summary: Loads brightness from (another) file.
+      responses:
+        '200':
+          description: The new level.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  new_brightness:
+                    type: integer
+                    example: 5
+                    minimum: 0
+                    maximum: 100
+        '400':
+          description: Invalid brightness level.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: The brigthness should be between 0 and 100
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        nume:
+          type: string
+          example: Ionel
+        varsta:
+          type: integer
+          example: 15
+        channels:
+          type: string
+          example: channel1,channel2,channel3

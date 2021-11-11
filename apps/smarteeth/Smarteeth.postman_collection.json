@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "b78847f1-43d6-41e3-a6b6-735e5dd2d632",
+		"name": "Smarteeth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Set config",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"David\",\n    \"age\": 24,\n    \"program\": 3,\n    \"teeth\": [1, 2, 6, 4, 2, 6, 4, 1]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9080/configuration",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get config",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/configuration/David",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"configuration",
+						"David"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get brushing conditions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/brushing/conditions/check",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"brushing",
+						"conditions",
+						"check"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set toothpaste weight",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/brushing/conditions/toothpasteWeight/1",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"brushing",
+						"conditions",
+						"toothpasteWeight",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set temperature",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/brushing/conditions/temperature/30",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"brushing",
+						"conditions",
+						"temperature",
+						"30"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set humidity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/brushing/conditions/humidty/25",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"brushing",
+						"conditions",
+						"humidty",
+						"25"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start brushing",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/brushing/start/David",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"brushing",
+						"start",
+						"David"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get brushing direction",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/brushing/direction",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"brushing",
+						"direction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Move brush",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/brushing/move",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"brushing",
+						"move"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set tooth color",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/health/toothColor/0",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"health",
+						"toothColor",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check for tartrum",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/health/tartrum",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"health",
+						"tartrum"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check for gum bleeding",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/health/gumBleeding",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"health",
+						"gumBleeding"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stop brushing",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/brushing/stop",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"brushing",
+						"stop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check brushing time",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/brushing/time",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"brushing",
+						"time"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get statistics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9080/statistics/David",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"statistics",
+						"David"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

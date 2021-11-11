@@ -1,0 +1,110 @@
+{
+   "input_buffers":{
+      "settings":{
+         "token_delimitators":"",
+         "protocol":"HTTP",
+         "method":"POST",
+         "prefix":"localhost:9080/settings",
+         "buffer-tokens":[
+            {
+               "name":"impact",
+               "description":"Sensor that lets the user know wether someone tries to break the window or not",
+               "value":"20",
+               "token_type":"string",
+               "byte_size":256,
+               "regex-rule":"[a-zA-Z]*",
+               "optional":false
+            },
+            {
+               "name":"air_quality",
+               "description":"Sensor that gives air quality",
+               "value":"67",
+               "token_type":"string",
+               "byte_size":256,
+               "regex-rule":"[a-zA-Z]*",
+               "optional":false
+            },
+            {
+               "name":"humidity",
+               "description":"Sensor that gives humidity",
+               "value":"20",
+               "token_type":"string",
+               "byte_size":256,
+               "regex-rule":"[a-zA-Z]*",
+               "optional":false
+            },
+            {
+               "name":"temperature",
+               "description":"Sensor that gives temperature",
+               "value":"35",
+               "token_type":"string",
+               "byte_size":256,
+               "regex-rule":"[a-zA-Z]*",
+               "optional":false
+            },
+            {
+               "name":"luminosity",
+               "description":"Sensor that gives luminosity",
+               "value":"50",
+               "token_type":"string",
+               "byte_size":256,
+               "regex-rule":"[a-zA-Z]*",
+               "optional":false
+            }
+         ]
+      },
+       "states":{
+          "token_delimitators":"",
+          "protocol":"HTTP",
+          "method":"POST",
+          "prefix":"localhost:9080/settings",
+          "buffer-tokens":[
+             {
+                "name":"windows_open",
+                "description":"Actuator that opens the door",
+                "value":"false",
+                "token_type":"string",
+                "byte_size":256,
+                "regex-rule":"false|true",
+                "optional":false
+             },
+             {
+                "name":"windows_semi_open",
+                "description":"Actuator that folds the window",
+                "value":"false",
+                "token_type":"string",
+                "byte_size":256,
+                "regex-rule":"false|true",
+                "optional":false
+             },
+             {
+                "name":"windows_closed",
+                "description":"Actuator that closes the door",
+                "value":"false",
+                "token_type":"string",
+                "byte_size":256,
+                "regex-rule":"false|true",
+                "optional":false
+             },
+             {
+                "name":"curtains_open",
+                "description":"Actuator that pulls the curtains",
+                "value":"false",
+                "token_type":"string",
+                "byte_size":256,
+                "regex-rule":"false|true",
+                "optional":false
+             },
+             {
+                "name":"alerted",
+                "description":"Actuator that alerts the client when someone tries to break the window",
+                "value":"false",
+                "token_type":"string",
+                "byte_size":256,
+                "regex-rule":"false|true",
+                "optional":false
+             }
+          ]
+       }
+    }
+ }

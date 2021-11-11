@@ -1,0 +1,191 @@
+{
+    "device-name": "SmartTV-Alpha-X",
+    "device-type": "TV",
+    "buffers-count": 9,
+    "input-buffers":{
+        "timp-idle": {
+            "token_delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -X POST localhost:9080/timp-idle",
+            "buffer-tokens": [
+                {
+                    "name": "idleTime",
+                    "description": "Maximum time for the inactivity of the tv",
+                    "token_type": "string",
+                    "byte_size": 256,
+                    "regex-rule": "[0-9]*",
+                    "optional": false
+                }
+            ]
+        },
+        "getSuggestedChannels": {
+            "token_delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -X GET localhost:9080/getSuggestedChannels",
+            "buffer-tokens": [
+                {
+                    "name": "Channel genre",
+                    "description": "A type of channel genre in order to get suggested channels by genre",
+                    "token_type": "string",
+                    "byte_size": 256,
+                    "regex-rule": "[a-zA-Z ]*",
+                    "optional": false
+                },
+                {
+                    "name": "Age",
+                    "description": "The age of user in order to get suggested channels by age",
+                    "token_type": "string",
+                    "byte_size": 256,
+                    "regex-rule": "[0-9]*",
+                    "optional": false
+                }
+            ]
+        },
+        "getSuggestedChannelsMQTT": {
+            "token_delimitators": "",
+            "protocol": "MQTT",
+            "prefix": "mosquitto_pub -m \"{\"gen\":\"Generalist\",\"varsta\":20}\" -t \"getSuggestedChannels\"",
+            "buffer-tokens": [
+                {
+                    "name": "Channel genre",
+                    "description": "A type of channel genre in order to get suggested channels by genre",
+                    "token_type": "string",
+                    "byte_size": 256,
+                    "regex-rule": "[a-zA-Z ]*",
+                    "optional": false
+                },
+                {
+                    "name": "Age",
+                    "description": "The age of user in order to get suggested channels by age",
+                    "token_type": "string",
+                    "byte_size": 256,
+                    "regex-rule": "[0-9]*",
+                    "optional": false
+                }
+            ]
+        },
+        "insertUser": {
+            "token_delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -X POST localhost:9080/insertUser",
+            "buffer-tokens": [
+                {
+                    "name": "Username",
+                    "description": "The name that username used for the account",
+                    "token_type": "string",
+                    "byte_size": 256,
+                    "regex-rule": "[a-zA-Z0-9 ]*",
+                    "optional": false
+                },
+                {
+                    "name": "Age",
+                    "description": "The age of the user",
+                    "token_type": "string",
+                    "byte_size": 256,
+                    "regex-rule": "[0-9]*",
+                    "optional": false
+                }
+            ]
+        },
+        "getHistoryAndRecommandations": {
+            "token_delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -X GET localhost:9080/getHistoryAndRecommandations",
+            "buffer-tokens": [
+                {
+                    "name": "Username",
+                    "description": "The name that username used for the account",
+                    "token_type": "string",
+                    "byte_size": 256,
+                    "regex-rule": "[a-zA-Z0-9]*",
+                    "optional": false
+                }
+            ]
+        },
+        "setBrightness": {
+            "token_delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -X POST localhost:9080/setBrightness",
+            "buffer-tokens": [
+                {
+                    "name": "Brightness",
+                    "description": "The value of brightness in order to set the luminosity of television",
+                    "token_type": "string",
+                    "byte_size": 256,
+                    "regex-rule": "[0-9]*",
+                    "optional": false
+                }
+            ]
+        }
+    },
+    "output-buffers":{
+        "getHistoryAndRecommandations":{
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -X GET localhost:9080/getHistoryAndRecommandations",
+            "buffer-tokens":[
+            {
+                "name":"canale_recomandate",
+                "description":"A list of pairs made of channels and their genres",
+                "token-type":"string", 
+                "byte-size":10, 
+                "regex-rule":"[([\"[a-zA-z]*\",\"[a-zA-Z0-9 ]*\"],)*([\"[a-zA-Z]*\",\"[a-zA-Z0-9 ]*\"])]",
+                "optional": false
+            },
+            {
+                "name":"istoric",
+                "description": "A list of channels made of the genres and the time the user spent while watching channels having the mentioned genres",
+                "token-type":"string",
+                "byte-size":10,
+                "regex-rule": "(\"[a-zA-z]*\":[0-9]*,)*(\"[a-zA-z]*\":[0-9]*)", 
+                "optional": true
+            }
+            ]
+        },
+        "getSuggestedChannels":{
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -X GET localhost:9080/getSuggestedChannels",
+            "buffer-tokens":[
+            {
+                "name":"channels",
+                "description":"Shows the list of suggested Channels based on age and genre preferance",
+                "token-type":"string", 
+                "byte-size":10, 
+                "regex-rule": "\"([a-zA-Z0-9 ]*,)*\"", 
+                "optional": false
+            }
+            ]
+        },
+        "notificationDistance":{
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -X GET localhost:9080/notificationDistance",
+            "buffer-tokens":[
+            {
+                "name":"notification_message",
+                "description":"Gives notification refering to the correct distance from the user to the TV",
+                "token-type":"string", 
+                "byte-size":10, 
+                "regex-rule": "[a-zA-Z0-9. ]*", 
+                "optional": false
+            }
+            ]
+        },
+        "timp-last":{
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl localhost:9080/timp-last",
+            "buffer-tokens":[
+            {
+                "name":"time",
+                "description":"Shows the number of seconds between the current time and the last done activity ",
+                "token-type":"string", 
+                "byte-size":10, 
+                "regex-rule": "[0-9]*", 
+                "optional": false
+            }
+            ]
+        }
+    }
+}

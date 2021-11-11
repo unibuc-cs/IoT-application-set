@@ -1,0 +1,186 @@
+openapi: 3.0.0
+info:
+  title: FlowerPower
+  version: 1.0.0
+servers:
+  - url: http://localhost:9080
+    description: Docker container exposed on localhost with default port.
+paths:
+  /settings/{settingName}:
+    get:
+      summary: Gets the value of the specified setting.
+      parameters:
+        - name: settingName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/SettingName'
+      responses:
+        '200':
+          description: The value of the requested setting.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: some_setting_value
+        '404':
+          description: If the setting does not exist.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: SomeSetting was not found.
+  /status:
+    get:
+      summary: Return plant status from local file.
+      responses:
+        '200':
+          description: Plant status.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /soilStatus:
+    get:
+      responses:
+        '200':
+          description: Soil status.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 
+                  - Soil ph above critical levels!
+                  - Soil humidity above critical levels!
+  /shovel:
+    get:
+      summary: Shovels the soil.
+      responses:
+        '200':
+          description: Success message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /irrigateSoil:
+    get:
+      responses:
+        '200':
+          description: Success message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /injectMinerals:
+    get:
+      responses:
+        '200':
+          description: Success message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /activateSolarLamp:
+    get:
+      responses:
+        '200':
+          description: Success message.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /settings/{settingName}/{settingValue}:
+    put:
+      summary: Sets a value to a setting specified by name.
+      parameters:
+        - name: settingName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/SettingName'
+        - name: settingValue
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The newly set value.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: some_setting_value
+        '404':
+          description: If the setting does not exist.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: SomeSetting was not found.
+  /settings:
+    put:
+      summary: Updates all settings by the specified JSON.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettingsObject'
+      responses:
+        '200':
+          description: Success message.
+  /plantInfo:
+    put:
+      summary: Updates plant settings.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlantObject'
+      responses:
+        '200':
+          description: Success message.
+        '422':
+          description: Invalid fields.
+          
+components:
+  schemas:
+    SettingName:
+      type: string
+      enum: [soilHumidity, luminosity, temperature, soilType, humidity, soilPh, phosphorus, nitrogen, potassium]
+    SettingsObject:
+      type: object
+      required: 
+        - sensorType
+        - min
+        - max
+      properties:
+        sensorType:
+          type: integer
+          enum: [1,2,3,4,5,6,7,8]
+        min:
+          type: number
+        max:
+          type: number
+        nutrientType:
+          type: string
+    PlantObject:
+      type: object
+      required:
+        - height
+        - species
+        - color
+        - type
+        - suitableSoilType
+      properties:
+        height:
+          type: number
+        species:
+          type: string
+        color:
+          type: string
+        suitableSoilType:
+          type: string
+        type:
+          type: string
+        

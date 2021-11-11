@@ -1,0 +1,49 @@
+{
+    "output_buffers": [
+        {
+            "byte_size": 256,
+            "description": "The window is opening",
+            "name": "windows_open",
+            "optional": false,
+            "regex-rule": "false|true",
+            "token_type": "string",
+            "value": false
+        },
+        {
+            "byte_size": 256,
+            "description": "The window is folding",
+            "name": "windows_semi_open",
+            "optional": false,
+            "regex-rule": "false|true",
+            "token_type": "string",
+            "value": false
+        },
+        {
+            "byte_size": 256,
+            "description": "The window is closing",
+            "name": "windows_closed",
+            "optional": false,
+            "regex-rule": "false|true",
+            "token_type": "string",
+            "value": false
+        },
+        {
+            "byte_size": 256,
+            "description": "The curtains are opening",
+            "name": "curtains_open",
+            "optional": false,
+            "regex-rule": "false|true",
+            "token_type": "string",
+            "value": false
+        },
+        {
+            "byte_size": 256,
+            "description": "The window is ",
+            "name": "alerted",
+            "optional": false,
+            "regex-rule": "false|true",
+            "token_type": "string",
+            "value": true
+        }
+    ]
+}

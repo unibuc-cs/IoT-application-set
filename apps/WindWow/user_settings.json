@@ -1,0 +1,35 @@
+{
+    "settings":{
+        "token_delimitators":"",
+        "protocol":"HTTP",
+        "method":"POST",
+        "prefix":"localhost:9080/userSettings",
+        "buffer-tokens": [{
+            "name":"username",
+            "description":"Window owner's username",
+            "value":"cumparator",
+            "token_type":"string",
+            "byte_size":256,
+            "regex-rule":"[a-zA-Z]*",
+            "optional":false
+        },
+        {
+            "name":"password",
+            "description":"Window owner's password",
+            "value":"parolasigura",
+            "token_type":"string",
+            "byte_size":256,
+            "regex-rule":"[a-zA-Z]*",
+            "optional":false
+        },
+        {
+            "name":"phonenumber",
+            "description":"Window owner's phone number, where he will be notified in case of breaking.",
+            "value":"0712345678",
+            "token_type":"string",
+            "byte_size":256,
+            "regex-rule":"[0-9]*",
+            "optional":false
+        }]
+    }
+}
