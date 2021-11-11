@@ -1,0 +1,84 @@
+openapi: 3.0.0
+info:
+  title: WindWow
+  description: One of the apps of the IoT-dataset
+  contact:
+    name: Rareș Cristea
+    url: http://github.com/raresito
+  version: 1.0.0
+servers: 
+  - url: http://141.85.232.40:9080
+    description: Some server
+paths:
+  /userSettings:
+    description: Set values received by sensor
+    post:
+      requestBody:
+        description: Set values received by sensor
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                    username:
+                      type: string
+                      example: cumparator
+                    password:
+                      type: string
+                      example: parolasigura
+                    phonenumber:
+                      type: integer
+                      example: 0712345678
+      responses:
+        '200':
+          description: The value of the requested setting.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: some_setting_value
+  /settings/{settingName}:
+    description: Get value of a specific setting
+    get:
+      description: Get value of a specific setting
+      parameters:
+        - in: path
+          name: settingName
+          required: true
+          schema:
+            type: string
+            example: luminosity
+      responses:
+        '200':
+          description: The value of the requested setting.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: air_quality is 25.00
+
+  /settings/{settingName}/{settingValue}:
+    description: Set value of a specific setting
+    post:
+      description: Set value of a specific setting
+      parameters:
+        - in: path
+          name: settingName
+          required: true
+          schema:
+            type: string
+            example: luminosity
+        - in: path
+          name: settingValue
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: The value of the requested setting.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: air_quality was set to 25

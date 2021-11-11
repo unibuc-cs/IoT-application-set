@@ -1,0 +1,32 @@
+asyncapi: 2.0.0
+info:
+  title: Account Service
+  version: '1.0.0'
+  description: |
+    Manages user accounts in the system.
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  production:
+    url: mqtt://test.mosquitto.org
+    protocol: mqtt
+    description: Test MQTT broker
+
+channels:
+  kettle/temp/{temperature}/{scale}:
+    subscribe:
+      operationId: getKettleTemperature
+      parameters:
+        - in: path
+        name: temperature
+        required: true
+        schema:
+          type: number
+          example: 50
+      - in: path
+        name: scale
+        required: true
+        schema:
+          type: string
+          example: celsius

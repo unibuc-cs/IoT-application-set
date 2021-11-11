@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info:
+  title: SmartKettle
+  description: One of the apps of the IoT-dataset
+  contact:
+    name: Rareș Cristea
+    url: http://github.com/raresito
+  version: 1.0.0
+servers:
+  - url: http://141.85.232.40:9080
+paths:
+    /configuration/{username}:
+    description: Set preferences of user
+    get:
+      description: What temperature to warm the liquid at
+      parameters:
+      - in: path
+        name: username
+        required: true
+        schema:
+          type: string
+          example: David
+    post:
+      requestBody:
+        description: Set preferences of user
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                    name:
+                      type: string
+                      example: Adrian
+                    age:
+                      type: integer
+                      example: 27
+                    program:
+                      type: integer
+                      example: 3
+                    teeth:
+                      type: array
+                      items:
+                        type: integer
+    /brushing/conditions/check:
+      description: Brushing activities
+      get:
+        description: Check status of brushing
+
+    /brushing/conditions/toothpasteWeight/{amount}:
+      description: Set amount of tooth paste
+      post:
+        parameters:
+        - in: path
+        name: amount
+        required: true
+        schema:
+          type: integer
+          example: 1
+
+    /brushing/conditions/temperature/{temperatureValue}:
+      description: Set temperature of brush
+      post:
+        parameters:
+        - in: path
+        name: temperatureValue
+        required: true
+        schema:
+          type: integer
+          example: 30
+      
+    /brushing/conditions/humidity/{humidityValue}:
+      description: Set humidity tooth paste
+      post:
+        parameters:
+        - in: path
+        name: humidityValue
+        required: true
+        schema:
+          type: integer
+          example: 25
+
+    /brushing/start/{username}:
+      description: Start brushing for username
+      post:
+        parameters:
+        - in: path
+        name: username
+        required: true
+        schema:
+          type: string
+          example: David
+
+    /brushing/direction:
+      description: Get the direction of brushing
+      get:
+        description: Get the direction of brushing
+
+    /brushing/move:
+      description: Start movement of brush
+      post:
+        description: Start movement of brush
+
+    /brushing/time:
+      description: Check brushing time
+      get:
+        description: Check brushing time
+
+    /health/toothColor/{toothColorValue}:
+      description: Set value for tooth color
+      post:
+        parameters:
+        - in: path
+        name: toothColorValue
+        required: true
+        schema:
+          type: integer
+          example: 0
+    /health/tartrum:
+      description: Check if user has tartrum
+      get:
+        description: Check if user has tartrum
+
+    /health/gumBleeding:
+      description: Check if user has gum bleeding
+      get:
+        description: Check if user has gum bleeding
+
+    /statistics/{username}:
+      description: Get statistics for username
+      get:
+        parameters:
+        - in: path
+        name: username
+        required: true
+        schema:
+          type: string
+          example: David

@@ -1,0 +1,14 @@
+[
+  {
+    "threshold": 30,
+    "temperature": "70"
+  },
+  {
+    "threshold": 50,
+    "temperature": "80"
+  },
+  {
+    "threshold": 70,
+    "temperature": "90"
+  }
+]
