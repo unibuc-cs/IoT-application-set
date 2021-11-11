@@ -10,8 +10,8 @@ COPY ./apps/smarteeth/openapi.yaml ./smarteeth-openapi.yaml
 COPY ./apps/SmartTV-Alpha-X/openapi.yaml ./smarttv-openapi.yaml 
 COPY ./apps/WindWow/openapi.yaml ./windwow-openapi.yaml 
 COPY ./apps/SmartKettle/swagger.yaml ./smartkettle-openapi.yaml 
-COPY ./configs ./configs
-COPY ./generate_clients.py .
+COPY ./hub/configs ./configs
+COPY ./hub/generate_clients.py .
 
 RUN mkdir -p clients
 RUN chmod +x ./generate_clients.py && ./generate_clients.py
