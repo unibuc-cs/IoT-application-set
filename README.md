@@ -11,6 +11,7 @@ For each IoT app in the Dataset, openapi-generator will be run, and the app-api-
 - [Repo Navigation](#repo-navigation)
 - [Prerequisites](#prerequisites)
 - [Installation Notes](#installation-notes)
+- [Development environment](#development-environment)
 - [IoT Applications References](#iot-applications-references)
 - [Notes](#notes)
 
@@ -66,6 +67,19 @@ To clean everything (containers, images, network), run:
 ```
 docker-compose down --rmi all
 ```
+
+## Development environment
+
+If you want to develop any of the applications or the hub, there are two smoother ways than
+using the default `docker-compose.yml` file. 
+
+* use `docker-compose.dev.yml` - it will build images from the local directory instead of pulling
+them from the remote repository. Unfortunately, after rebuilding an image you will have to
+restart the entire composer session or to manually recreate the container of the service you are
+targeting. (eg. `docker-compose -f docker-compose.dev.yml create --force-recreate <service>`
+and then `docker-compose -f docker-compose.dev.yml restart <service>`)
+
+* use `dev.py` - it manages individual docker containers. See `./dev.py -h` for more information.
 
 ***Notes***
 

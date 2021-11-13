@@ -1,0 +1,84 @@
+version: '3.3'
+services:
+  flowerpower:
+    ports:
+        - '9081:9080'
+    restart: always
+    build:
+      context: ./apps/flowerpower
+    networks:
+      - iot_dataset
+    depends_on:
+      - "mqtt_server"
+
+  smartkettle:
+    ports:
+        - '9082:9080'
+    restart: always
+    build:
+      context: ./apps/smartkettle 
+    networks:
+      - iot_dataset
+    depends_on:
+      - "mqtt_server"
+
+  smarttv:
+    ports:
+        - '9083:9080'
+    restart: always
+    build:
+      context: ./apps/smarttv
+    networks:
+      - iot_dataset
+    depends_on:
+      - "mqtt_server"
+
+  windwow:
+    ports:
+        - '9084:9080'
+    restart: always
+    build:
+      context: ./apps/windwow
+    networks:
+      - iot_dataset
+    depends_on:
+        - "mqtt_server"
+  smarteeth:
+    ports:
+        - '9085:9080'
+    restart: always
+    build:
+      context: ./apps/smarteeth
+    networks:
+      - iot_dataset
+    depends_on:
+        - "mqtt_server"
+
+  mqtt_server:
+    image: eclipse-mosquitto
+    ports:
+      - 9883:1883
+      - 10001:9001
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_logs:/mosquitto/log
+    networks:
+      - iot_dataset
+
+  hub_app:
+    privileged: true
+    build:
+      context: .
+      dockerfile: ./hub/Dockerfile 
+    networks:
+      - iot_dataset
+    depends_on:
+        - "mqtt_server"
+
+volumes:
+  mosquitto_data:
+  mosquitto_logs:
+      
+networks:
+  iot_dataset:

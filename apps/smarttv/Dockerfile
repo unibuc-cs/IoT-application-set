@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:20.04
 
 # Dependencies
 RUN apt update -y && apt upgrade -y
@@ -6,7 +6,7 @@ RUN echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections
 RUN echo 'tzdata tzdata/Zones/Europe select Paris' | debconf-set-selections
 RUN DEBIAN_FRONTEND="noninteractive" apt install -y tzdata
 RUN apt install -y software-properties-common g++ nlohmann-json3-dev \
-    mosquitto mosquitto-clients libmosquitto-dev cmake pkg-config
+    mosquitto mosquitto-clients libmosquitto-dev cmake pkg-config --fix-missing
 RUN add-apt-repository ppa:pistache+team/unstable && apt update -y && apt install -y libpistache-dev
 
 # Debugging
