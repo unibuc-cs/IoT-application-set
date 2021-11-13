@@ -12,6 +12,8 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include <iomanip>
+#include <chrono>
+#include <thread>
 #include "Window.cpp"
 
 
@@ -343,7 +345,12 @@ private:
             response.send(Http::Code::Ok, settingName + " is " + valueSetting);
         }
         else {
-            response.send(Http::Code::Not_Found, settingName + " was not found");
+            // START FAKE BUG
+            // No response, long wait
+            std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+            // END FAKE BUG
+
+            //response.send(Http::Code::Not_Found, settingName + " was not found");
         }
     }
       // Create the lock which prevents concurrent editing of the same variable

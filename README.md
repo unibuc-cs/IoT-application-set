@@ -14,6 +14,7 @@ For each IoT app in the Dataset, openapi-generator will be run, and the app-api-
 - [Development environment](#development-environment)
 - [IoT Applications References](#iot-applications-references)
 - [Notes](#notes)
+- [Artificially introduced bugs](#artificially-introduced-bugs)
 
 ## Repo Navigation
 
@@ -96,8 +97,19 @@ and then `docker-compose -f docker-compose.dev.yml restart <service>`)
 * https://github.com/unibuc-cs/SmartTV-Alpha-X
 * https://github.com/unibuc-cs/WindWow
 
-## Notes
+## Artificially introduced bugs
 
-If you want to interact with the applications, you can change the code of the [hub app](https://github.com/unibuc-cs/iot-dataset-hub-app), rebuild the image and restart the composer. 
-
-If you want live updates, mount the directory of the hub app as a volume inside the docker container.
+Bugs introduced in the applications for testing reasons:
+* invalid memory access (segmentation fault) in windwow. Trigger:
+```
+curl -X 'POST' \
+  'http://localhost:9084/settings/luminosity/9999' \
+  -H 'accept: text/plain' \
+  -d ''
+```
+* no response from server in windwow. Trigger:
+```
+curl -X 'GET' \
+  'http://localhost:9084/settings/invalid' \
+  -H 'accept: text/plain'
+```
