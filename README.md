@@ -77,8 +77,8 @@ using the default `docker-compose.yml` file.
 * use `docker-compose.dev.yml` - it will build images from the local directory instead of pulling
 them from the remote repository. Unfortunately, after rebuilding an image you will have to
 restart the entire composer session or to manually recreate the container of the service you are
-targeting. (eg. `docker-compose -f docker-compose.dev.yml create --force-recreate <service>`
-and then `docker-compose -f docker-compose.dev.yml restart <service>`)
+targeting. (eg. `docker-compose -f docker-compose.dev.yml up --build --force-recreate <service>` in a
+different terminal)
 
 * use `dev.py` - it manages individual docker containers. See `./dev.py -h` for more information.
 
