@@ -1,11 +1,12 @@
 FROM ubuntu:latest
 
 # Dependencies
-RUN apt update -y && apt upgrade -y
-RUN apt install -y software-properties-common g++ nlohmann-json3-dev
-RUN add-apt-repository ppa:pistache+team/unstable && apt update -y && apt install -y libpistache-dev
-
-RUN apt install -y gcc make cmake cmake-gui cmake-curses-gui libssl-dev git
+RUN apt update -y && apt upgrade -y && \
+    apt install -y software-properties-common g++ nlohmann-json3-dev && \
+    add-apt-repository ppa:pistache+team/unstable && apt update -y && apt install -y libpistache-dev && \
+    apt install -y gcc make cmake cmake-gui cmake-curses-gui libssl-dev git && \
+    apt install -y doxygen graphviz && \
+    apt install -y curl wget nmap
 
 RUN git clone https://github.com/eclipse/paho.mqtt.c.git && \
     cd paho.mqtt.c && \
@@ -15,15 +16,10 @@ RUN git clone https://github.com/eclipse/paho.mqtt.c.git && \
     cmake --build build/ --target install && \
     ldconfig
 
-RUN apt install -y doxygen graphviz
-
 RUN git clone https://github.com/eclipse/paho.mqtt.cpp && cd paho.mqtt.cpp && \ 
     cmake -Bbuild -H. -DPAHO_BUILD_STATIC=ON -DPAHO_BUILD_DOCUMENTATION=TRUE -DPAHO_BUILD_SAMPLES=TRUE && \
     cmake --build build/ --target install && \
     ldconfig
-
-# Debugging
-RUN apt install -y curl wget nmap
 
 # Compile
 COPY . /app
