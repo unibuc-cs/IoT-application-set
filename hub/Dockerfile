@@ -1,7 +1,6 @@
 FROM openapitools/openapi-generator-cli
 
-RUN apt update
-RUN apt install python3 python3-pip -y
+RUN apt update && apt install python3 python3-pip -y
 
 WORKDIR /project
 
