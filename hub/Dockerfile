@@ -11,6 +11,7 @@ COPY ./apps/smarttv/openapi.yaml ./smarttv-openapi.yaml
 COPY ./apps/windwow/openapi.yaml ./windwow-openapi.yaml 
 COPY ./apps/smartkettle/swagger.yaml ./smartkettle-openapi.yaml 
 COPY ./hub/configs ./configs
+COPY ./hub/features ./features
 COPY ./hub/generate_clients.py .
 
 RUN mkdir -p clients

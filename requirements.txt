@@ -5,6 +5,7 @@ Jinja2==3.0.2
 MarkupSafe==2.0.1
 Werkzeug==2.0.2
 wheel==0.37.0
+behave==1.2.6
 ./clients/flowerpower
 ./clients/smarttv
 ./clients/windwow
