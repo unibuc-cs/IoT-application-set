@@ -103,8 +103,8 @@ class Environment:
 
 # Collect data from sensors
 def gather_data(env: Environment):
-    luminosity_raw = env.clients["windwow"].settings_setting_name_get("luminosity", _check_return_type=False)
-    env.data["windwow"]["luminosity"] = float(luminosity_raw[14:])
+    temperature_raw = env.clients["windwow"].settings_setting_name_get("temperature", _check_return_type=False)
+    env.data["windwow"]["temperature"] = float(temperature_raw[14:])
 
     # error here
     #env.data["smarteeth"]["gum_bleeding"] = env.clients["smarteeth"].health_gum_bleeding_get()
@@ -115,14 +115,16 @@ def gather_data(env: Environment):
     #temperature = float(temperature_raw)
     #env.data["flowerpower"]["temperature"] = temperature
 
-# If window luminosity is X, then set Kettle RPM to X.
+# If window temperature is X, then set Kettle RPM to X.
 def rule1(env: Environment):
-    print("Rule 1")
-    print(f"Window luminosity is f{env.data['windwow']['luminosity']}")
-
-    env.clients["smartkettle"].stir_liquid_rpm_get(int(env.data["windwow"]["luminosity"]))
-    env.data["smartkettle"]["rpm"] = int(env.data["windwow"]["luminosity"])
-    print(f"Kettle RPM was set to {int(env.data['windwow']['luminosity'])}")
+    # print("Rule 1")
+    # print(f"Window temperature is f{env.data['windwow']['temperature']}")
+    # # print(f"Setting window luminosity to 50")
+    # # env.clients["windwow"].settings_setting_name_setting_value_post("luminosity", 50)
+    # print(env.data["windwow"]["temperature"])
+    # env.clients["smartkettle"].stir_liquid_rpm_get(int(env.data["windwow"]["temperature"]))
+    # env.data["smartkettle"]["rpm"] = int(env.data["windwow"]["temperature"])
+    # print(f"Kettle RPM was set to {int(env.data['windwow']['temperature'])}")
 
 # If plant temperature is above 30 degrees, reduce the luminosity of the window to half
 def rule2(env: Environment):
@@ -139,7 +141,7 @@ def rule2(env: Environment):
     print(f"Luminosity changed from {old} to {env.data['windwow']['luminosity']}")
 
 def rule3(env: Environment):
-    print("Rule 3")
+    print("Rule 33")
 
 def rule4(env: Environment):
     print("Rule 4")
@@ -148,12 +150,14 @@ def rule5(env: Environment):
     print("Rule 5")
 
 env = Environment([
-    gather_data,
-    rule1,
-    #rule2,
-    rule3,
-    rule4,
-    rule5,
-])
-env.run()
+        gather_data,
+        rule1,
+        #rule2,
+        rule3,
+        rule4,
+        rule5,
+    ])
+
+if __name__ == "__main__":
+    env.run()
 
