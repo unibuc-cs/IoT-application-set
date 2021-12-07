@@ -42,16 +42,15 @@ docker-compose up -d
 
 To sent packages to one of the apps, one can attach to the hub container:
 ```
-docker exec -it iot-dataset-hub-app_hub_app_1 /bin/bash
-python3 ./hub/app.py
+docker exec -it <hub_container_name> /bin/bash
 # curl -I -X GET http://<app_container_hostname>:9080/warmLiquid/80/celsius
-curl -I -X GET http://thelittlewho/smartkettle:9080/warmLiquid/80/celsius
+curl -X GET http://iot-dataset-hub-app-smartkettle-1:9080/warmLiquid/80/celsius
 ```
 
 To sent requests from the local machine without attaching to the containers, run:
 ```
-# curl -I -X GET http://localhost:<app_container_port>/warmLiquid/80/celsius
-curl -I -X GET http://thelittlewho/smartkettle:9082/warmLiquid/80/celsius
+# curl -X GET http://localhost:<app_container_port>/warmLiquid/80/celsius
+curl -X GET http://localhost:9082/warmLiquid/80/celsius
 ```
 
 To stop the containers, run:
