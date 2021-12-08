@@ -6,9 +6,10 @@ info:
     name: Rareș Cristea
     url: http://github.com/raresito
   version: 1.0.0
+host: windwow:9080
 servers: 
-  - url: http://141.85.232.40:9080
-    description: Some server
+  - url: http://windwow:9080
+    description: Docker environment
 paths:
   /userSettings:
     description: Set values received by sensor

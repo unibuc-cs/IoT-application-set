@@ -68,6 +68,7 @@ services:
 
   hub_app:
     privileged: true
+    restart: always
     build:
       context: .
       dockerfile: ./hub/Dockerfile 
@@ -82,3 +83,4 @@ volumes:
       
 networks:
   iot_dataset:
+    external: true

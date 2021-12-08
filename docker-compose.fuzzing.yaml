@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  windwow_restler:
+    privileged: true
+    build:
+      context: ./restler
+    networks:
+      - iot_dataset
+    volumes:
+      - ./apps/windwow:/target
+      - ./restler/results/windwow:/results
+
+networks:
+  iot_dataset:
+    external: true

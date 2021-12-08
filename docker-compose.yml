@@ -62,3 +62,6 @@ volumes:
   mosquitto_data:
   mosquitto_logs:
       
+networks:
+  iot_dataset:
+    external: true
