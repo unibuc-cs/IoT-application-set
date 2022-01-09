@@ -104,8 +104,8 @@ class Environment:
 # Collect data from sensors
 def gather_data(env: Environment):
     print("Gather data")
-    # temperature_raw = env.clients["windwow"].settings_setting_name_get("temperature", _check_return_type=False)
-    # env.data["windwow"]["temperature"] = float(temperature_raw[14:])
+    temperature_raw = env.clients["windwow"].settings_setting_name_get("temperature", _check_return_type=False)
+    env.data["windwow"]["temperature"] = float(temperature_raw[14:])
 
     # luminosity_raw = env.clients["windwow"].settings_setting_name_get("luminosity", _check_return_type=False)
     # env.data["windwow"]["luminosity"] = float(luminosity_raw[14:])
