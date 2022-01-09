@@ -6,7 +6,6 @@ info:
     name: Rareș Cristea
     url: http://github.com/raresito
   version: 1.0.0
-host: windwow:9080
 servers: 
   - url: http://windwow:9080
     description: Docker environment

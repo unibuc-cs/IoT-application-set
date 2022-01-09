@@ -103,9 +103,12 @@ class Environment:
 
 # Collect data from sensors
 def gather_data(env: Environment):
-    temperature_raw = env.clients["windwow"].settings_setting_name_get("temperature", _check_return_type=False)
-    env.data["windwow"]["temperature"] = float(temperature_raw[14:])
+    print("Gather data")
+    # temperature_raw = env.clients["windwow"].settings_setting_name_get("temperature", _check_return_type=False)
+    # env.data["windwow"]["temperature"] = float(temperature_raw[14:])
 
+    # luminosity_raw = env.clients["windwow"].settings_setting_name_get("luminosity", _check_return_type=False)
+    # env.data["windwow"]["luminosity"] = float(luminosity_raw[14:])
     # error here
     #env.data["smarteeth"]["gum_bleeding"] = env.clients["smarteeth"].health_gum_bleeding_get()
     #print ('gum', env.data["smarteeth"]["gum_bleeding"])
@@ -116,7 +119,7 @@ def gather_data(env: Environment):
     #env.data["flowerpower"]["temperature"] = temperature
 
 # If window temperature is X, then set Kettle RPM to X.
-def rule1(env: Environment):
+# def rule1(env: Environment):
     # print("Rule 1")
     # print(f"Window temperature is f{env.data['windwow']['temperature']}")
     # # print(f"Setting window luminosity to 50")
@@ -141,7 +144,12 @@ def rule2(env: Environment):
     print(f"Luminosity changed from {old} to {env.data['windwow']['luminosity']}")
 
 def rule3(env: Environment):
-    print("Rule 33")
+    print("Rule 3")
+    print("If luminosity amount is less than the threshold, then turn on the lamp")
+
+    if env.data["windwow"]["luminosity"] < threshold:
+        env.clients["flowerpower"].activate_solar_lamp_get()
+
 
 def rule4(env: Environment):
     print("Rule 4")
@@ -151,9 +159,9 @@ def rule5(env: Environment):
 
 env = Environment([
         gather_data,
-        rule1,
+        # rule1,
         #rule2,
-        rule3,
+        # rule3,
         rule4,
         rule5,
     ])
