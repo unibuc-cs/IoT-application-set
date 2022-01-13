@@ -1,21 +1,27 @@
 from behave import *
 import app
+from flowerpower.model.setting_name import SettingName
 
-@given('Plant lamp is off and luminosity is 24')
+@given('window luminosity is below threshold')
 def step_impl(context):
-    # Get 
-    app.gather_data(app.env)
-    print(context.app.env.data["windwow"]["luminosity"])
-    context.app = app
-    pass
+    app.env.clients["flowerpower"]\
+        .settings_setting_name_setting_value_put(
+            SettingName("luminosity"), 
+            str(1)
+        )
 
-@when('Luminosity is 10')
-def step_impl(context):
-    app.env.clients["windwow"].settings_setting_name_setting_value_post("luminosity", int(temperature_value))
-    # app.rule3(app.env, 24, 10)
-    pass
+    app.env.clients["windwow"]\
+        .settings_setting_name_setting_value_post(
+            "luminosity", 
+            1,
+        )
 
-@then('Turn on the plant lamp')
+
+@when('plant is activated')
 def step_impl(context):
-    solar_lamp_status = app.env.clients["flowerpower"]
-    assert context.app.env.data["smartkettle"]["rpm"] == context.app.env.data["windwow"]["temperature"]
+    app.env.run_simple()
+
+@then('plant luminosity is above the min value')
+def step_impl(context):
+    print(app.env.data["flowerpower"]["luminosity"])
+    assert app.env.data["flowerpower"]["luminosity"] >= 1

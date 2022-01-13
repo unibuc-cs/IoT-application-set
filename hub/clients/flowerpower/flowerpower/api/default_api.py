@@ -257,7 +257,7 @@ class DefaultApi(object):
         )
         self.settings_setting_name_get_endpoint = _Endpoint(
             settings={
-                'response_type': (str,),
+                'response_type': (bool, date, datetime, dict, float, int, list, str, none_type,),
                 'auth': [],
                 'endpoint_path': '/settings/{settingName}',
                 'operation_id': 'settings_setting_name_get',
@@ -306,7 +306,7 @@ class DefaultApi(object):
         )
         self.settings_setting_name_setting_value_put_endpoint = _Endpoint(
             settings={
-                'response_type': (str,),
+                'response_type': (bool, date, datetime, dict, float, int, list, str, none_type,),
                 'auth': [],
                 'endpoint_path': '/settings/{settingName}/{settingValue}',
                 'operation_id': 'settings_setting_name_setting_value_put',
@@ -826,7 +826,7 @@ class DefaultApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            str
+            bool, date, datetime, dict, float, int, list, str, none_type
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -893,7 +893,7 @@ class DefaultApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            str
+            bool, date, datetime, dict, float, int, list, str, none_type
                 If the method is called asynchronously, returns the request
                 thread.
         """

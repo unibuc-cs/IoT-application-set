@@ -21,7 +21,6 @@ paths:
           content:
             text/plain:
               schema:
-                type: string
                 example: some_setting_value
         '404':
           description: If the setting does not exist.
@@ -109,7 +108,6 @@ paths:
           content:
             text/plain:
               schema:
-                type: string
                 example: some_setting_value
         '404':
           description: If the setting does not exist.

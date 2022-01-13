@@ -336,7 +336,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **settings_setting_name_get**
-> str settings_setting_name_get(setting_name)
+> bool, date, datetime, dict, float, int, list, str, none_type settings_setting_name_get(setting_name)
 
 Gets the value of the specified setting.
 
@@ -380,7 +380,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**str**
+**bool, date, datetime, dict, float, int, list, str, none_type**
 
 ### Authorization
 
@@ -402,7 +402,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **settings_setting_name_setting_value_put**
-> str settings_setting_name_setting_value_put(setting_name, setting_value)
+> bool, date, datetime, dict, float, int, list, str, none_type settings_setting_name_setting_value_put(setting_name, setting_value)
 
 Sets a value to a setting specified by name.
 
@@ -448,7 +448,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**str**
+**bool, date, datetime, dict, float, int, list, str, none_type**
 
 ### Authorization
 
