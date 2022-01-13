@@ -1,6 +1,6 @@
-Feature: Plant lamp trigger by window
+Feature: plant lamp trigger by window
 
-  Scenario Outline: Plant lamp is turned on based on window luminosity
-     Given Plant lamp is off and luminosity is 24
-      When Luminosity is 10
-      Then Turn on the plant lamp
+  Scenario: plant lamp is turned on based on window luminosity
+     Given window luminosity is below threshold
+      When plant is activated
+      Then plant luminosity is above the min value
