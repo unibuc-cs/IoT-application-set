@@ -116,8 +116,8 @@ class Window {
                         if(settings[i].value > 25.0) {
                             if(changed_state[3] % 2 == 0) {
                                 // START FAKE BUG
-                                volatile int *p = nullptr;
-                                p[50] = 0xdeadbeef;
+                                //volatile int *p = nullptr;
+                                //p[50] = 0xdeadbeef;
                                 // END FAKE BUG
 
                                 changed_state[3] += 1;
