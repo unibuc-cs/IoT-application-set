@@ -24,3 +24,7 @@ docker manifest push $USERNAME/smarttv:latest
 docker manifest create $USERNAME/smarteeth:latest $USERNAME/smarteeth:amd64 \
 	$USERNAME/smarteeth:arm
 docker manifest push $USERNAME/smarteeth:latest
+
+docker manifest create $USERNAME/hub_app:latest $USERNAME/hub_app:amd64 \
+	$USERNAME/hub_app:arm
+docker manifest push $USERNAME/hub_app:latest

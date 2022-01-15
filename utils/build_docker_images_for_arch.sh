@@ -12,5 +12,7 @@ docker buildx build -t $USERNAME/windwow:$TAG --push ../apps/windwow
 docker buildx build -t $USERNAME/smarttv:$TAG --push ../apps/smarttv
 docker buildx build -t $USERNAME/smarteeth:$TAG --push ../apps/smarteeth
 
+docker buildx build -t $USERNAME/hub_app:$TAG --push ../hub
+
 docker buildx use default
 docker buildx rm sasha
