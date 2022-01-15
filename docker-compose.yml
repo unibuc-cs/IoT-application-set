@@ -4,7 +4,7 @@ services:
     ports:
         - '9081:9080'
     restart: always
-    image: thelittlewho/flowerpower:latest
+    image: andreiaoca/flowerpower:latest
     depends_on:
       - "mqtt_server"
 
@@ -12,7 +12,7 @@ services:
     ports:
         - '9082:9080'
     restart: always
-    image: thelittlewho/smartkettle:latest
+    image: andreiaoca/smartkettle:latest
     depends_on:
       - "mqtt_server"
 
@@ -20,7 +20,7 @@ services:
     ports:
         - '9083:9080'
     restart: always
-    image: thelittlewho/smarttv:latest
+    image: andreiaoca/smarttv:latest
     depends_on:
       - "mqtt_server"
 
@@ -28,14 +28,14 @@ services:
     ports:
         - '9084:9080'
     restart: always
-    image: thelittlewho/windwow:latest
+    image: andreiaoca/windwow:latest
     depends_on:
         - "mqtt_server"
   smarteeth:
     ports:
         - '9085:9080'
     restart: always
-    image: thelittlewho/smarteeth:latest
+    image: andreiaoca/smarteeth:latest
     depends_on:
         - "mqtt_server"
 
@@ -50,7 +50,7 @@ services:
       - mosquitto_logs:/mosquitto/log 
 
   hub_app:
-    image: thelittlewho/hub_app:latest
+    image: andreiaoca/hub_app:latest
     depends_on:
       - "flowerpower"
       - "smarteeth"
