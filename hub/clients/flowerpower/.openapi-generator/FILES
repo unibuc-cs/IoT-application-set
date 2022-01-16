@@ -1,6 +1,5 @@
 .gitignore
 .gitlab-ci.yml
-.openapi-generator-ignore
 .travis.yml
 README.md
 docs/DefaultApi.md
@@ -27,8 +26,4 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
-test/test_default_api.py
-test/test_plant_object.py
-test/test_setting_name.py
-test/test_settings_object.py
 tox.ini
