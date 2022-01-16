@@ -72,7 +72,7 @@ paths:
           name: settingValue
           required: true
           schema:
-            type: integer
+            type: number
             example: 5
       responses:
         '200':

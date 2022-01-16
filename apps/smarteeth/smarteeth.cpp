@@ -260,7 +260,8 @@ int main()
     router.get("/statistics/:name", Routes::bind(getStatisticsRoute));
 
     // Configure server
-    const std::string host = "localhost";
+    // BUG TO UNPATCH host set to localhost
+    const std::string host = "0.0.0.0";
     const Port port = 9080;
 
     Address address(host, port);
