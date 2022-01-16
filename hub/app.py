@@ -166,7 +166,6 @@ def rule3(env: Environment):
     threshold = env.settings["plant_lamp_window_treshold"]
 
     # // BUG TO UNPATCH don't check window temperature
-    print("should?", env.data["windwow"]["luminosity"], threshold, env.data["windwow"]["temperature"])
     if env.data["windwow"]["luminosity"] < threshold and env.data["windwow"]["temperature"] < 30:
         print(f"If luminosity amount is less than the threshold = {threshold}, then turn on the lamp")
         print("Lamp turned on")
