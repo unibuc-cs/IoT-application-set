@@ -3,7 +3,6 @@ import app
 
 @given('TV brightness is set to {X}, window luminosity to {Y} and base luminosity to {Z}')
 def step_impl(context, X, Y, Z):
-    print(X)
     app.env.clients["smarttv"].set_brightness_level_post(int(X))
     
     app.env.clients["windwow"]\
@@ -14,7 +13,7 @@ def step_impl(context, X, Y, Z):
 
     app.env.settings["tv_base_brightness"] = int(Z)
 
-@when('automation rules are triggered')
+@when('automation rules are triggered for TV')
 def step_impl(context):
     app.env.run_simple()
 
