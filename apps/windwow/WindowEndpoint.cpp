@@ -345,11 +345,6 @@ private:
             response.send(Http::Code::Ok, settingName + " is " + valueSetting);
         }
         else {
-            // START FAKE BUG
-            // No response, long wait
-            //std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-            // END FAKE BUG
-
             response.send(Http::Code::Not_Found, settingName + " was not found");
         }
     }

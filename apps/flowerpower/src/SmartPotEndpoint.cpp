@@ -26,8 +26,8 @@ namespace pot
         map<string, Sensor> s_2;
         map<string, Sensor> s_3;
         Sensor s1("soilHumidity", 2, 3, 6);
-        Sensor s2("luminosity", 2,4,5);
-        Sensor s3("temperature", 3,3,3);
+        Sensor s2("luminosity", 2,1,3);
+        Sensor s3("temperature", 5,0,50);
         Sensor s4("soilType", "Red",3,3);
         Sensor s5("humidity", 3,3,3);
         Sensor s6("soilPh", 3,3,3);
@@ -231,17 +231,13 @@ namespace pot
         string settingName = request.param(":settingName").as<string>();
 
         // Retrieve the setting value.
-        string settingValue = request.param(":settingName").as<string>();
+        double settingValue = request.param(":settingValue").as<double>();
 
-        // If it does NOT exist.
-        if (smartPot->Get(settingName, settingValue))
-        {
-            response.send(Http::Code::Not_Found, settingName + " was not found");
-        }
-        else
-        {
-            response.send(Http::Code::Ok, settingValue);
-        }
+        Sensor aux = smartPot->GetSensor(settingName);
+        aux.SetValue(settingValue);
+        smartPot->Set(settingName, aux);
+
+        response.send(Http::Code::Ok, "OK");
     }
 
     void SmartPotEndpoint::putSettingUpdate(const Rest::Request &request,
@@ -268,12 +264,13 @@ namespace pot
         
         string message = "";
 
-        double sensorTypeID = document["sensorType"].GetDouble();
+        auto sensorTypeID = document["sensorType"].GetInt();
         double sensorMin = document["min"].GetDouble();
         double sensorMax = document["max"].GetDouble();
 
         // Valoarea o updatam in MQTT.
-        if (document["nutrientType"].IsNull())
+        // BUG TO UNPATCH don't check for HasMember
+        if ((!document.HasMember("nutrientType")) or document["nutrientType"].IsNull())
         {
             Sensor aux = smartPot->GetSensor(sensorNameMap[sensorTypeID]);
             aux.SetMinValue(sensorMin);
