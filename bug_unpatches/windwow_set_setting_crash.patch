@@ -1,0 +1,17 @@
+diff --git a/apps/windwow/Window.cpp b/apps/windwow/Window.cpp
+index c77e868..3f04e09 100644
+--- a/apps/windwow/Window.cpp
++++ b/apps/windwow/Window.cpp
+@@ -115,10 +115,9 @@ class Window {
+                     if(settings[i].name == "luminosity") {
+                         if(settings[i].value > 25.0) {
+                             if(changed_state[3] % 2 == 0) {
+-                                // BUG TO UNPATCH
+                                 // START FAKE BUG
+-                                // volatile int *p = nullptr;
+-                                // p[50] = 0xdeadbeef;
++                                volatile int *p = nullptr;
++                                p[50] = 0xdeadbeef;
+                                 // END FAKE BUG
+ 
+                                 changed_state[3] += 1;
