@@ -1,0 +1,14 @@
+diff --git a/apps/smarteeth/smarteeth.cpp b/apps/smarteeth/smarteeth.cpp
+index d5cd988..bc03848 100644
+--- a/apps/smarteeth/smarteeth.cpp
++++ b/apps/smarteeth/smarteeth.cpp
+@@ -260,8 +260,7 @@ int main()
+     router.get("/statistics/:name", Routes::bind(getStatisticsRoute));
+ 
+     // Configure server
+-    // BUG TO UNPATCH host set to localhost
+-    const std::string host = "0.0.0.0";
++    const std::string host = "localhost";
+     const Port port = 9080;
+ 
+     Address address(host, port);

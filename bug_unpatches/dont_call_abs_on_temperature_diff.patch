@@ -1,0 +1,14 @@
+diff --git a/hub/app.py b/hub/app.py
+index f1b3c71..4249404 100644
+--- a/hub/app.py
++++ b/hub/app.py
+@@ -190,8 +190,7 @@ def rule5(env: Environment):
+     print("Rule 5")
+ 
+     target_temp = 40
+-    # // BUG TO UNPATCH forgot to add abs
+-    dif = abs(env.data["windwow"]["temperature"] - 10)
++    dif = env.data["windwow"]["temperature"] - 10
+     if env.data["windwow"]["temperature"] < 10:
+         target_temp = dif * 3 + target_temp
+ 

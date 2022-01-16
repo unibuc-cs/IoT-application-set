@@ -1,0 +1,14 @@
+diff --git a/apps/flowerpower/src/SmartPotEndpoint.cpp b/apps/flowerpower/src/SmartPotEndpoint.cpp
+index 8b3ee56..a6e1342 100644
+--- a/apps/flowerpower/src/SmartPotEndpoint.cpp
++++ b/apps/flowerpower/src/SmartPotEndpoint.cpp
+@@ -269,8 +269,7 @@ namespace pot
+         double sensorMax = document["max"].GetDouble();
+ 
+         // Valoarea o updatam in MQTT.
+-        // BUG TO UNPATCH don't check for HasMember
+-        if ((!document.HasMember("nutrientType")) or document["nutrientType"].IsNull())
++        if (document["nutrientType"].IsNull())
+         {
+             Sensor aux = smartPot->GetSensor(sensorNameMap[sensorTypeID]);
+             aux.SetMinValue(sensorMin);
