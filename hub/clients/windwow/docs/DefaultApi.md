@@ -1,6 +1,6 @@
 # windwow.DefaultApi
 
-All URIs are relative to *http://141.85.232.40:9080*
+All URIs are relative to *http://windwow:9080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -24,10 +24,10 @@ import time
 import windwow
 from windwow.api import default_api
 from pprint import pprint
-# Defining the host is optional and defaults to http://141.85.232.40:9080
+# Defining the host is optional and defaults to http://windwow:9080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = windwow.Configuration(
-    host = "http://141.85.232.40:9080"
+    host = "http://windwow:9080"
 )
 
 
@@ -89,10 +89,10 @@ import time
 import windwow
 from windwow.api import default_api
 from pprint import pprint
-# Defining the host is optional and defaults to http://141.85.232.40:9080
+# Defining the host is optional and defaults to http://windwow:9080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = windwow.Configuration(
-    host = "http://141.85.232.40:9080"
+    host = "http://windwow:9080"
 )
 
 
@@ -101,7 +101,7 @@ with windwow.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = default_api.DefaultApi(api_client)
     setting_name = "luminosity" # str | 
-    setting_value = 5 # int | 
+    setting_value = 5 # float | 
 
     # example passing only required values which don't have defaults set
     try:
@@ -117,7 +117,7 @@ with windwow.ApiClient() as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **setting_name** | **str**|  |
- **setting_value** | **int**|  |
+ **setting_value** | **float**|  |
 
 ### Return type
 
@@ -155,10 +155,10 @@ import windwow
 from windwow.api import default_api
 from windwow.model.inline_object import InlineObject
 from pprint import pprint
-# Defining the host is optional and defaults to http://141.85.232.40:9080
+# Defining the host is optional and defaults to http://windwow:9080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = windwow.Configuration(
-    host = "http://141.85.232.40:9080"
+    host = "http://windwow:9080"
 )
 
 

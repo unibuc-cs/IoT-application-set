@@ -1,6 +1,5 @@
 .gitignore
 .gitlab-ci.yml
-.openapi-generator-ignore
 .travis.yml
 README.md
 docs/DefaultApi.md
@@ -33,11 +32,4 @@ smarttv/models/__init__.py
 smarttv/rest.py
 test-requirements.txt
 test/__init__.py
-test/test_default_api.py
-test/test_inline_response200.py
-test/test_inline_response2001.py
-test/test_inline_response2002.py
-test/test_inline_response2003.py
-test/test_inline_response2004.py
-test/test_user.py
 tox.ini

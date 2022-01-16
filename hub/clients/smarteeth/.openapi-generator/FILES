@@ -1,6 +1,5 @@
 .gitignore
 .gitlab-ci.yml
-.openapi-generator-ignore
 .travis.yml
 README.md
 docs/DefaultApi.md
@@ -23,6 +22,4 @@ smarteeth/models/__init__.py
 smarteeth/rest.py
 test-requirements.txt
 test/__init__.py
-test/test_default_api.py
-test/test_inline_object.py
 tox.ini

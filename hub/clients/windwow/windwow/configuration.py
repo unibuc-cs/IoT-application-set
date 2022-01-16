@@ -92,7 +92,7 @@ class Configuration(object):
                  ):
         """Constructor
         """
-        self._base_path = "http://141.85.232.40:9080" if host is None else host
+        self._base_path = "http://windwow:9080" if host is None else host
         """Default Base url
         """
         self.server_index = 0 if server_index is None and host is None else server_index
@@ -178,9 +178,6 @@ class Configuration(object):
 
         self.proxy = None
         """Proxy URL
-        """
-        self.no_proxy = None
-        """bypass proxy for host in the no_proxy list.
         """
         self.proxy_headers = None
         """Proxy headers
@@ -390,8 +387,8 @@ class Configuration(object):
         """
         return [
             {
-                'url': "http://141.85.232.40:9080",
-                'description': "Some server",
+                'url': "http://windwow:9080",
+                'description': "Docker environment",
             }
         ]
 
