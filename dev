@@ -1,0 +1,87 @@
+#!/usr/bin/env python3
+from os import system
+import os
+from yaml import safe_load as yaml_load
+import argparse
+
+def main():
+    parser = argparse.ArgumentParser(description='IoT dataset development tools')
+    parser.add_argument('command', 
+        help='Command to execute',
+        choices=commands.keys(),
+    )
+    parser.add_argument('--prod',
+        help='Run in production mode',
+        default=False,
+    )
+    parser.add_argument('--app',
+        help='Target application',
+        required=False,
+    )
+    args = parser.parse_args()
+    apps = load_config()
+
+    commands[args.command](args, apps)
+
+def generate_clients(args, apps):
+    system("docker build -t clients_builder -f clients_builder/Dockerfile ./clients_builder")
+    system("mkdir -p ./hub/clients")
+    system("docker run -v $(pwd)/apps:/apps -v $(pwd)/hub/src/clients:/clients clients_builder")
+
+docker_base_cmds = {
+    "dev": "docker-compose -f docker-compose.dev.yml",
+    "prod": "docker-compose -f docker-compose.dev.yml -f docker-compose.prod.yml",
+}
+get_base_cmd = lambda args: docker_base_cmds['prod' if args.prod else 'dev']
+
+def init(args, apps):
+    if not os.path.exists(".env-initialized"):
+        open(".env-initialized", "w").write("")
+    else:
+        return
+
+    system("docker network create iot_dataset")
+    generate_clients(args, apps)
+    build_all(args, apps)
+
+def start_all(args, apps):
+    cmd = get_base_cmd(args)
+    system(f"{cmd} up")
+
+def build_all(args, apps):
+    cmd = get_base_cmd(args)
+    system(f"{cmd} build --parallel")
+
+def run_functional_tests(args, apps):
+    cmd = get_base_cmd(args)
+    system(f"{cmd} exec hub_app bash -c 'cd src && behave'")
+
+def reload(args, apps):
+    cmd = get_base_cmd(args)
+    system(f"{cmd} up --build --force-recreate {args.app}")
+
+def shell(args, apps):
+    cmd = get_base_cmd(args)
+    system(f"{cmd} exec {args.app} bash")
+
+commands = {f.__name__.replace('_', '-'): f for f in [
+    generate_clients,
+    run_functional_tests,
+    start_all,
+    build_all,
+    reload,
+    shell,
+    init,
+]}
+
+def load_config():
+    config = yaml_load(open("docker-compose.dev.yml"))
+    apps = {}
+    for service, service_config in config['services'].items():
+        if 'labels' in service_config and \
+            'type=application' in service_config['labels']:
+            apps[service] = service_config
+    return apps
+
+if __name__ == '__main__':
+    main()

@@ -26,7 +26,7 @@ For each IoT app in the Dataset, openapi-generator will be run, and the app-api-
     ├── docker-compose.yml       # Docker script to start up the entire network.
     ├── mosquitto.conf           # Configs for the mosquitto server.
     ├── requirements.txt         # Packages dependencies
-    ├── test-network.sh     # Script to test the network.
+    ├── test-network.sh          # Script to test the network.
     └── README.md
 
 ## Prerequisites
@@ -35,58 +35,23 @@ To generate new app-api-clients you will need to follow [the instalation instruc
 
 ## Installation Notes
 
-We provide a `docker-compose` script that builds and starts the apps and the hub.
-
-Before proceeding forward, you need to create a Docker network for our environment:
+First, you need to install the requirements for our command line tool.
 ```
-docker network create iot_dataset
+pip install -r requirements.txt
 ```
 
-To start the whole network, run:
+Now, you can use `./dev` or `python3 ./dev` CLI tool to manage the project. To install the dependencies
+and build docker imges, use:
 ```
-docker-compose up -d
-``` 
-
-To sent packages to one of the apps, one can attach to the hub container:
-```
-docker exec -it <hub_container_name> /bin/bash
-# curl -I -X GET http://<app_container_hostname>:9080/warmLiquid/80/celsius
-curl -X GET http://iot-dataset-hub-app-smartkettle-1:9080/warmLiquid/80/celsius
+./dev init
 ```
 
-To sent requests from the local machine without attaching to the containers, run:
-```
-# curl -X GET http://localhost:<app_container_port>/warmLiquid/80/celsius
-curl -X GET http://localhost:9082/warmLiquid/80/celsius
-```
+## Usage
 
-To stop the containers, run:
+To start the dataset, use:
 ```
-docker-compose stop
+./dev start-all
 ```
-
-To clean the containers created, run:
-```
-docker-compose down
-```
-
-To clean everything (containers, images, network), run:
-```
-docker-compose down --rmi all
-```
-
-## Development environment
-
-If you want to develop any of the applications or the hub, there are two smoother ways than
-using the default `docker-compose.yml` file. 
-
-* use `docker-compose.dev.yml` - it will build images from the local directory instead of pulling
-them from the remote repository. Unfortunately, after rebuilding an image you will have to
-restart the entire composer session or to manually recreate the container of the service you are
-targeting. (eg. `docker-compose -f docker-compose.dev.yml up --build --force-recreate <service>` in a
-different terminal)
-
-* use `dev.py` - it manages individual docker containers. See `./dev.py -h` for more information.
 
 ***Notes***
 
@@ -122,7 +87,10 @@ curl -X 'GET' \
 
 ## Behaviour driven testing
 
-TBD
+After starting the dataset, use the following command to run the tests:
+```
+./dev run-functional-tests
+```
 
 ## Fuzzing
 

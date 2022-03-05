@@ -1,6 +1,9 @@
 version: '3.3'
 services:
+# === Application flowerpower ===
   flowerpower:
+    labels:
+      - type=application
     ports:
         - '9081:9080'
     restart: always
@@ -11,7 +14,10 @@ services:
     depends_on:
       - "mqtt_server"
 
+# === Application smartkettle ===
   smartkettle:
+    labels:
+      - type=application
     ports:
         - '9082:9080'
     restart: always
@@ -22,7 +28,10 @@ services:
     depends_on:
       - "mqtt_server"
 
+# === Application smarttv ===
   smarttv:
+    labels:
+      - type=application
     ports:
         - '9083:9080'
     restart: always
@@ -33,7 +42,10 @@ services:
     depends_on:
       - "mqtt_server"
 
+# === Application windwow ===
   windwow:
+    labels:
+      - type=application
     ports:
         - '9084:9080'
     restart: always
@@ -43,7 +55,11 @@ services:
       - iot_dataset
     depends_on:
         - "mqtt_server"
+
+# === Application smarteeth ===
   smarteeth:
+    labels:
+      - type=application
     ports:
         - '9085:9080'
     restart: always
@@ -54,7 +70,10 @@ services:
     depends_on:
         - "mqtt_server"
 
+# === MQTT broker ===
   mqtt_server:
+    labels:
+      - type=infrastructure
     image: eclipse-mosquitto
     ports:
       - 9883:1883
@@ -66,16 +85,17 @@ services:
     networks:
       - iot_dataset
 
+# === The hub application ===
   hub_app:
+    labels:
+      - type=infrastructure
     privileged: true
     restart: always
     build:
-      context: .
-      dockerfile: ./hub/Dockerfile 
+      context: ./hub
     volumes:
-      - ./hub/app.py:/project/app.py
+      - ./hub/src:/project/src
       - ./hub/features:/project/features
-      - ./hub/trigger.py:/project/trigger.py
     networks:
       - iot_dataset
     depends_on:

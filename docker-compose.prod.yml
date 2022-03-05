@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  flowerpower:
+    image: andreiaoca/flowerpower:latest
+
+  smartkettle:
+    image: andreiaoca/smartkettle:latest
+
+  smarttv:
+    image: andreiaoca/smarttv:latest
+
+  windwow:
+    image: andreiaoca/windwow:latest
+
+  smarteeth:
+    image: andreiaoca/smarteeth:latest
+
+  hub_app:
+    image: andreiaoca/hub_app:latest
