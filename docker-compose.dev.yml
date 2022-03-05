@@ -70,6 +70,20 @@ services:
     depends_on:
         - "mqtt_server"
 
+# === Application smartoven ===
+  smartoven:
+    labels:
+      - type=application
+    ports:
+        - '9086:5000'
+    restart: always
+    build:
+      context: ./apps/smartoven
+    networks:
+      - iot_dataset
+    depends_on:
+        - "mqtt_server"
+
 # === MQTT broker ===
   mqtt_server:
     labels:
