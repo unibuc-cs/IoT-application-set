@@ -1,6 +1,7 @@
-FROM openapitools/openapi-generator-cli:v5.3.0
+FROM ubuntu:latest
 
-RUN apt update && apt install python3 python3-pip -y
+ENV DEBIAN_FRONTEND="noninteractive"
+RUN apt update && apt install python3 python3-pip wget openjdk-11-jdk -y
 
 WORKDIR /project
 
@@ -12,6 +13,10 @@ COPY ./apps/smartkettle/swagger.yaml ./smartkettle-openapi.yaml
 COPY ./hub/configs ./configs
 COPY ./hub/features ./features
 COPY ./hub/generate_clients.py .
+
+RUN mkdir -p mkdir -p /opt/openapi-generator/modules/openapi-generator-cli/target/
+RUN wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.3.1/openapi-generator-cli-5.3.1.jar \
+	-O /opt/openapi-generator/modules/openapi-generator-cli/target/openapi-generator-cli.jar
 
 RUN mkdir -p clients
 RUN chmod +x ./generate_clients.py && ./generate_clients.py
