@@ -1,0 +1,557 @@
+info:
+  description: Oven. But smart.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: SmartOven
+  version: 1.0.0
+openapi: 3.0.2
+paths:
+  /oven/{oven_id}:
+    get:
+      parameters:
+      - in: path
+        name: oven_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  recipe:
+                    properties:
+                      baking_temperature:
+                        type: integer
+                      name:
+                        type: string
+                      prep_details:
+                        type: string
+                      prep_time:
+                        type: integer
+                    type: object
+                  state:
+                    type: string
+                  temperature:
+                    type: integer
+                  time:
+                    type: integer
+                required:
+                - state
+                type: object
+          description: Successfully returned the specified oven's info
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Please specify an oven ID
+                    type: string
+                type: object
+          description: Bad request - Missing oven ID
+        '404':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: No oven found with id
+                    type: string
+                type: object
+          description: Oven not found
+      summary: See current oven info.
+  /oven/{oven_id}/recipe/{recipe_name}:
+    post:
+      description: (cooking temperature, cooking time).<br/>
+      parameters:
+      - in: path
+        name: oven_id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: recipe_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Success
+                    type: string
+                type: object
+          description: Successfully added the recipe to the oven
+        '404':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Oven with id does not exist
+                    type: string
+                type: object
+          description: Not found oven/recipe with specified id/name
+      summary: Sets the oven to the cooking parameters specified in the recipe
+  /oven/{oven_id}/state:
+    post:
+      description: Oven will start preparing food according to its given settings.<br/>
+      parameters:
+      - in: path
+        name: oven_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                state:
+                  example: true
+                  type: boolean
+              required:
+              - state
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Oven with id has started cooking
+                    type: string
+                type: object
+          description: Successfully changed oven's state
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Missing state parameter
+                    type: string
+                type: object
+          description: Bad request - Missing state parameter or bad state value
+        '404':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Oven with id does not exist
+                    type: string
+                type: object
+          description: Not found oven with specified id
+      summary: Manage oven state (True if oven is on, False otherwise)
+  /oven/{oven_id}/temperature:
+    post:
+      parameters:
+      - in: path
+        name: oven_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                temperature:
+                  example: 50
+                  type: integer
+              required:
+              - temperature
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Success
+                    type: string
+                type: object
+          description: Successfully changed oven's temperature
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Missing temperature parameter
+                    type: string
+                type: object
+          description: Bad request - Missing temperature parameter or bad state value
+        '404':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Oven with id does not exist
+                    type: string
+                type: object
+          description: Not found oven with specified id
+      summary: Manually sets the oven temperature (in Celsius).
+  /oven/{oven_id}/time:
+    post:
+      parameters:
+      - in: path
+        name: oven_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                time:
+                  example: 50
+                  type: integer
+              required:
+              - time
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Success
+                    type: string
+                type: object
+          description: Successfully changed oven's time
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Missing time parameter
+                    type: string
+                type: object
+          description: Bad request - Missing time parameter or bad state value
+        '404':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Oven with id does not exist
+                    type: string
+                type: object
+          description: Not found oven with specified id
+      summary: Manually sets the oven time (in minutes).
+  /recipe:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    baking_temperature:
+                      type: integer
+                    name:
+                      type: string
+                    prep_details:
+                      type: string
+                    prep_time:
+                      type: integer
+                  required:
+                  - name
+                  type: object
+                type: array
+          description: Successfully returned a list of recipes
+      summary: Get all recipes that are saved in the oven's database
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                baking_temperature:
+                  example: 20
+                  type: integer
+                name:
+                  example: Test recipe
+                  type: string
+                prep_details:
+                  example: Test recipe details
+                  type: string
+                prep_time:
+                  example: 10
+                  type: integer
+              required:
+              - name
+              - prep_time
+              - prep_details
+              - baking_temperature
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    example: 1
+                    type: string
+                  message:
+                    example: Successfully added the recipe
+                    type: string
+                type: object
+          description: Successfully added a new recipe
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Missing fields to perform adding of a recip
+                    type: string
+                type: object
+          description: Bad request - Missing required fields for a recipe
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: A recipe with the same name already exists
+                    type: string
+                type: object
+          description: Conflict - Duplicate recipe
+      summary: Add a new recipe in the oven's database
+  /recipe/find:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  example: Banana bread
+                  type: string
+              required:
+              - name
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  baking_temperature:
+                    example: 20
+                    type: integer
+                  name:
+                    example: Test recipe
+                    type: string
+                  prep_details:
+                    example: Test recipe details
+                    type: string
+                  prep_time:
+                    example: 10
+                    type: integer
+                type: object
+          description: Successfully found and added a new recipe
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Missing fields to search recipe
+                    type: string
+                type: object
+          description: Bad request - Missing required fields for a recipe
+        '401':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: The client is not authorised to search
+                    type: string
+                type: object
+          description: Unauthorised client
+        '404':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: No recipe with name found
+                    type: string
+                type: object
+          description: Recipe not found
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: A recipe with the same name already exists
+                    type: string
+                type: object
+          description: Conflict - Duplicate recipe
+      summary: Search a new recipe and add it in the oven's database
+  /recipe/{recipe_id}:
+    delete:
+      parameters:
+      - in: path
+        name: recipe_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Successfully deleted recipe with specified id
+                    type: string
+                type: object
+          description: Successfully returned the specified recipe
+        '404':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: A recipe with the specified id does not exist
+                    type: string
+                type: object
+          description: Recipe not found
+      summary: Delete a recipe with the specified id from oven's database
+    put:
+      parameters:
+      - in: path
+        name: recipe_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                baking_temperature:
+                  type: integer
+                name:
+                  type: string
+                prep_details:
+                  type: string
+                prep_time:
+                  type: integer
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Successfully updated recipe with specified id
+                    type: string
+                type: object
+          description: Successfully returned the specified recipe
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Request content contains unallowed fields
+                    type: string
+                type: object
+          description: Bad request - Recipe is missing or has unallowed fields
+        '404':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: A recipe with the specified id does not exist
+                    type: string
+                type: object
+          description: Recipe not found
+        '500':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: An error occured during update of the recipe
+                    type: string
+                type: object
+          description: Server error during recipe update
+      summary: Update a recipe with the specified id from oven's database
+  /recipe/{recipe_name}:
+    get:
+      parameters:
+      - in: path
+        name: recipe_name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  baking_temperature:
+                    type: integer
+                  name:
+                    type: string
+                  prep_details:
+                    type: string
+                  prep_time:
+                    type: integer
+                required:
+                - name
+                type: object
+          description: Successfully returned the specified recipe
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Invalid request
+                    type: string
+                type: object
+          description: Bad request - Missing recipe name
+        '404':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    example: Recipe not found
+                    type: string
+                type: object
+          description: Recipe not found
+      summary: Get recipe with the specified name from oven's database
