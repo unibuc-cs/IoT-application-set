@@ -118,7 +118,7 @@ class DefaultApi(object):
                     'setting_name':
                         (str,),
                     'setting_value':
-                        (int,),
+                        (float,),
                 },
                 'attribute_map': {
                     'setting_name': 'settingName',
@@ -271,7 +271,7 @@ class DefaultApi(object):
 
         Args:
             setting_name (str):
-            setting_value (int):
+            setting_value (float):
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status

@@ -6,8 +6,8 @@ MarkupSafe==2.0.1
 Werkzeug==2.0.2
 wheel==0.37.0
 behave==1.2.6
-./clients/flowerpower
-./clients/smarttv
-./clients/windwow
-./clients/smartkettle
-./clients/smarteeth
+-e ./clients/flowerpower
+-e ./clients/smarttv
+-e ./clients/windwow
+-e ./clients/smartkettle
+-e ./clients/smarteeth

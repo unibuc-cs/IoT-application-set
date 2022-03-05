@@ -72,6 +72,10 @@ services:
     build:
       context: .
       dockerfile: ./hub/Dockerfile 
+    volumes:
+      - ./hub/app.py:/project/app.py
+      - ./hub/features:/project/features
+      - ./hub/trigger.py:/project/trigger.py
     networks:
       - iot_dataset
     depends_on:

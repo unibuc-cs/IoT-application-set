@@ -13,6 +13,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <iostream>
 
 
 using namespace std;
@@ -104,7 +105,6 @@ public:
 
     int Set(const string& name, const Sensor& value)
     {
-        // If the setting does not exist.
         if(!Find(name))
         {
             return 1;
@@ -203,6 +203,9 @@ public:
             luminosity.SetValue((luminosity.GetMinValue() + luminosity.GetMaxValue())/2);
             returnMessage += "Luminosity has been increased to: " + to_string(luminosity.GetDoubleValue());
         }
+        // BUG TO UNPATCH this set is not called in the original code
+        Set("luminosity", luminosity);
+
         return returnMessage;
     }
 

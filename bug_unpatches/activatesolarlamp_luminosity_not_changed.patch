@@ -1,0 +1,13 @@
+diff --git a/apps/flowerpower/include/SmartPot.hpp b/apps/flowerpower/include/SmartPot.hpp
+index f491f90..9f4eb2a 100644
+--- a/apps/flowerpower/include/SmartPot.hpp
++++ b/apps/flowerpower/include/SmartPot.hpp
+@@ -203,8 +203,6 @@ public:
+             luminosity.SetValue((luminosity.GetMinValue() + luminosity.GetMaxValue())/2);
+             returnMessage += "Luminosity has been increased to: " + to_string(luminosity.GetDoubleValue());
+         }
+-        // BUG TO UNPATCH this set is not called in the original code
+-        Set("luminosity", luminosity);
+ 
+         return returnMessage;
+     }

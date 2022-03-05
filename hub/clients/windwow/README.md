@@ -52,10 +52,10 @@ import windwow
 from pprint import pprint
 from windwow.api import default_api
 from windwow.model.inline_object import InlineObject
-# Defining the host is optional and defaults to http://141.85.232.40:9080
+# Defining the host is optional and defaults to http://windwow:9080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = windwow.Configuration(
-    host = "http://141.85.232.40:9080"
+    host = "http://windwow:9080"
 )
 
 
@@ -75,7 +75,7 @@ with windwow.ApiClient(configuration) as api_client:
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://141.85.232.40:9080*
+All URIs are relative to *http://windwow:9080*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
