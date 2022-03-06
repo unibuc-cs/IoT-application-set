@@ -44,6 +44,10 @@ def init(args, apps):
     generate_clients(args, apps)
     build_all(args, apps)
 
+def start(args, apps):
+    cmd = get_base_cmd(args)
+    system(f"{cmd} up {args.app}")
+
 def start_all(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} up")
@@ -51,6 +55,10 @@ def start_all(args, apps):
 def build_all(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} build --parallel")
+
+def build(args, apps):
+    cmd = get_base_cmd(args)
+    system(f"{cmd} build {args.app}")
 
 def run_functional_tests(args, apps):
     cmd = get_base_cmd(args)
@@ -60,6 +68,10 @@ def reload(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} up --build --force-recreate {args.app}")
 
+def restart(args, apps):
+    cmd = get_base_cmd(args)
+    system(f"{cmd} restart {args.app}")
+
 def shell(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} exec {args.app} bash")
@@ -67,9 +79,12 @@ def shell(args, apps):
 commands = {f.__name__.replace('_', '-'): f for f in [
     generate_clients,
     run_functional_tests,
+    start,
     start_all,
+    build,
     build_all,
     reload,
+    restart,
     shell,
     init,
 ]}

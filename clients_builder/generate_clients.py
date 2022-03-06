@@ -2,6 +2,7 @@
 
 from os import system, listdir
 from sys import argv
+import sys
 
 if len(argv) < 3:
     print(f"Usage: {argv[0]} <input> <output> [target user] [target group]")
@@ -16,7 +17,9 @@ apps = listdir(input_dir)
 
 print(f"Apps: {', '.join(apps)}")
 
-requirements = ""
+requirements = """\
+-e ./mergedclients
+"""
 
 importer_template = """\
 
@@ -44,6 +47,24 @@ def get_all_clients_apis():
 
 """
 
+setupfile = """\
+from setuptools import setup, find_packages  # noqa: H301
+
+NAME = "mergedclients"
+VERSION = "1.0.0"
+
+setup(
+    name=NAME,
+    version=VERSION,
+    description="Merged Clients",
+    url="",
+    keywords=[],
+    python_requires=">=3.6",
+    packages=find_packages(exclude=["test", "tests"]),
+    include_package_data=True,
+)
+"""
+
 generator = "java -jar /opt/openapi-generator/modules/openapi-generator-cli/target/openapi-generator-cli.jar"
 for app in apps:
     app_path = f"{input_dir}/{app}"
@@ -58,7 +79,13 @@ for app in apps:
     importer += importer_template.replace("NAME_CAPITAL", app.capitalize()).replace("NAME", app)
 
 open(f"{output_dir}/requirements.txt", "w").write(requirements)
-open(f"{output_dir}/all.py", "w").write(importer)
-open(f"{output_dir}/__init__.py", "w").write("")
+
+# Generate a package which imports all the generated clients
+packagepath = f"{output_dir}/mergedclients"
+packagecodepath = f"{packagepath}/mergedclients"
+system(f"mkdir -p {packagecodepath}")
+open(f"{packagecodepath}/all.py", "w").write(importer)
+open(f"{packagecodepath}/__init__.py", "w").write("")
+open(f"{packagepath}/setup.py", "w").write(setupfile)
 
 system(f"chown -R {target_user}:{target_group} {output_dir}")

@@ -6,7 +6,7 @@ from pprint import pprint
 from time import sleep
 
 # Import all default things
-from clients.all import *
+from mergedclients.all import *
 
 # Additional imports
 from flowerpower.model.setting_name import SettingName
@@ -120,7 +120,7 @@ def rule4(env: Environment):
         )
     # // BUG TO UNPATCH forget to call min
     env.data["smarttv"]["brightness"] = min(env.data["smarttv"]["brightness"], 10)
-    env.clients["smarttv"].set_brightness_level_post(int(env.data["smarttv"]["brightness"]))
+    env.clients["smarttv"].set_brig`htness_level_post(int(env.data["smarttv"]["brightness"]))
 
 # If it's cold outside, increase the temperature in the kettle by 3 degrees for every degree under 10 at window's thermometer
 def rule5(env: Environment):
@@ -144,15 +144,18 @@ def rule5(env: Environment):
     idx2 = m.index(msg2)
     env.data["smartkettle"]["temperature"] = float(m[idx1:idx2])
 
-env = Environment([
-        gather_data,
-        rule1,
-        rule2,
-        rule3,
-        #rule4, # There is some bug
-        rule5,
-    ])
+def main():
+    env = Environment([
+            gather_data,
+            rule1,
+            rule2,
+            rule3,
+            #rule4, # There is some bug
+            rule5,
+        ])
+
+    env.run()
 
 if __name__ == "__main__":
-    env.run()
+    main()
 
