@@ -90,7 +90,7 @@ def rule2(env: Environment):
     env.data["flowerpower"]["temperature"] *= 0.70
     env.data["flowerpower"]["temperature"] = env.data["flowerpower"]["temperature"]
 
-    env.clients["windwow"].settings_setting_name_setting_value_post("luminosity", env.data["windwow"]["luminosity"], _check_input_type=False, _host_index=0)
+    env.clients["windwow"].settings_setting_name_setting_value_post("luminosity", str(int(env.data["windwow"]["luminosity"])), _check_input_type=False, _host_index=0)
     env.clients["flowerpower"].settings_setting_name_setting_value_put(SettingName("luminosity"), str(env.data["windwow"]["luminosity"]))
     env.clients["flowerpower"].settings_setting_name_setting_value_put(SettingName("temperature"), str(env.data["flowerpower"]["temperature"]))
     print(f"Luminosity changed from {old} to {env.data['windwow']['luminosity']}")
@@ -144,18 +144,15 @@ def rule5(env: Environment):
     idx2 = m.index(msg2)
     env.data["smartkettle"]["temperature"] = float(m[idx1:idx2])
 
-def main():
-    env = Environment([
-            gather_data,
-            rule1,
-            rule2,
-            rule3,
-            #rule4, # There is some bug
-            rule5,
-        ])
-
-    env.run()
+env = Environment([
+        gather_data,
+        rule1,
+        #rule2, # This is broken too
+        rule3,
+        #rule4, # There is some bug
+        rule5,
+    ])
 
 if __name__ == "__main__":
-    main()
+    env.run()
 
