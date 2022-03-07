@@ -120,7 +120,7 @@ def rule4(env: Environment):
         )
     # // BUG TO UNPATCH forget to call min
     env.data["smarttv"]["brightness"] = min(env.data["smarttv"]["brightness"], 10)
-    env.clients["smarttv"].set_brig`htness_level_post(int(env.data["smarttv"]["brightness"]))
+    env.clients["smarttv"].set_brightness_level_post(int(env.data["smarttv"]["brightness"]))
 
 # If it's cold outside, increase the temperature in the kettle by 3 degrees for every degree under 10 at window's thermometer
 def rule5(env: Environment):
