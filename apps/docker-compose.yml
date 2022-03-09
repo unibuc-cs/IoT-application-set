@@ -1,0 +1,80 @@
+version: '3.9'
+services:
+
+  # hue2mqtt:
+  #   build:
+  #     context: ./hue2mqtt
+  #     dockerfile: Dockerfile
+  #   image: hue2mqtt:latest
+  #   container_name: hue2mqtt
+  #   hostname: hue2mqtt
+  #   volumes:
+  #     - ./hue2mqtt/config.js:/app/config.js
+  #   restart: always
+
+  # ipcam2mqtt:
+
+  # aqara2mqtt:
+  #   build:
+  #     context: ./aqara2mqtt
+  #     dockerfile: Dockerfile
+  #   image: aqara2mqtt:latest
+  #   container_name: aqara
+  #   hostname: aqara
+  #   volumes:
+  #     - ./aqara2mqtt/config:/app/config
+  #   restart: always
+
+  simple_publisher:
+    build:
+      context: ./simple_mqtt
+      dockerfile: Dockerfile
+    image: mqtt:latest
+    container_name: mqtt_simple_publisher
+    hostname: mqtt_simple_publisher
+    networks:
+      mqtt_local:
+        ipv4_address: 172.26.0.4
+    # command: mosquitto_pub -h 172.26.0.2 -t sensor/temperature -m 37 
+    command: python3 /app/publisher.py
+    depends_on:
+      - simple_subscriber
+      - mosquitto
+
+  simple_subscriber:
+    build:
+      context: ./simple_mqtt
+      dockerfile: Dockerfile
+    image: mqtt:latest
+    container_name: mqtt_simple_subscriber
+    hostname: mqtt_simple_subscriber
+    # command: mosquitto_sub -h 172.26.0.2 -t sensor/temperature 
+    command: python3 /app/subscriber.py
+    depends_on:
+      - mosquitto
+    networks:
+      mqtt_local:
+        ipv4_address: 172.26.0.3
+
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    hostname: mosquitto
+    restart: always
+    networks:
+      mqtt_local:
+        ipv4_address: 172.26.0.2
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+    ports:
+      - 1883:1883
+      - 9001:9001
+
+networks:
+  mqtt_local:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.26.0.0/24
+          gateway: 172.26.0.1
