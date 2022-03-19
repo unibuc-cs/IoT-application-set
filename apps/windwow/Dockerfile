@@ -1,13 +1,12 @@
 FROM ubuntu:latest
 
 # Dependencies
+COPY ./deps_ubuntu.sh .
 RUN apt update -y && apt upgrade -y && \
     echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections && \
     echo 'tzdata tzdata/Zones/Europe select Paris' | debconf-set-selections && \
     DEBIAN_FRONTEND="noninteractive" apt install -y tzdata && \
-    apt install -y software-properties-common g++ nlohmann-json3-dev \
-    mosquitto mosquitto-clients libmosquitto-dev cmake && \
-    add-apt-repository ppa:pistache+team/unstable && \
+    ./deps_ubuntu.sh && \
     apt update -y && apt install -y libpistache-dev
 
 # Compile

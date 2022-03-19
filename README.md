@@ -46,6 +46,12 @@ and build docker imges, use:
 ./dev init
 ```
 
+**Local environment**: If you want to build the applications on your local machine instead
+of using docker containers, you should do the following:
+
+1. install the dependencies (only for Ubuntu at the moment): `./dev deps-ubuntu-local`
+2. build your apps: `./dev build-local-all`
+
 ## Usage
 
 To start the dataset, use:

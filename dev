@@ -44,6 +44,18 @@ def init(args, apps):
     generate_clients(args, apps)
     build_all(args, apps)
 
+def deps_ubuntu_local(args, apps):
+    for app in apps:
+        system(f"cd apps/{app} && ./deps_ubuntu.sh")
+
+def build_local(args, apps):
+    system(f"mkdir -p apps/{args.app}/build && cd apps/{args.app}/build && ../build.sh")
+
+def build_local_all(args, apps):
+    for app in apps:
+        args.app = app
+        build_local(args, apps)
+
 def start(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} up {args.app}")
@@ -87,6 +99,9 @@ commands = {f.__name__.replace('_', '-'): f for f in [
     restart,
     shell,
     init,
+    deps_ubuntu_local,
+    build_local,
+    build_local_all,
 ]}
 
 def load_config():

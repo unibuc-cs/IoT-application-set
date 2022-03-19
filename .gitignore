@@ -6,3 +6,4 @@ restler/results
 clients/
 .vscode/
 .env-initialized
+build/
