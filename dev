@@ -46,10 +46,19 @@ def init(args, apps):
 
 def deps_ubuntu_local(args, apps):
     for app in apps:
-        system(f"cd apps/{app} && ./deps_ubuntu.sh")
+        depsPath = os.path.join(f"./apps/{app}/deps_ubuntu.sh")
+        if os.path.exists(depsPath):
+            system(f"cd apps/{app} && ./deps_ubuntu.sh")
+        else:
+            print(f"Warning: App {app} does not have a deps_ubuntu.sh file as expected in {depsPath} !!")
 
 def build_local(args, apps):
-    system(f"mkdir -p apps/{args.app}/build && cd apps/{args.app}/build && ../build.sh")
+    print(f"Building app {args.app}")
+    buildFilePath = os.path.join(f"./apps/{args.app}/build.sh")
+    if os.path.exists(buildFilePath):
+        system(f"mkdir -p apps/{args.app}/build && cd apps/{args.app}/build && ../build.sh")
+    else:
+        print(f"Warning: expected build file {args.app} missing. But maybe it is a python app !")
 
 def build_local_all(args, apps):
     for app in apps:
