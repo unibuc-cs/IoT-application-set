@@ -84,6 +84,32 @@ services:
     depends_on:
         - "mqtt_server"
 
+# === Application soundsystem ===
+  soundsystem:
+    labels:
+      - type=application
+    ports:
+        - '9087:8080'
+    restart: always
+    build:
+      context: ./apps/soundsystem
+    networks:
+      - iot_dataset
+    depends_on:
+        - "mqtt_server"
+
+# === Application smartoven ===
+  serasmart:
+    labels:
+      - type=application
+    ports:
+        - '9087:5000'
+    restart: always
+    build:
+      context: ./apps/serasmart
+    networks:
+      - iot_dataset
+
 # === MQTT broker ===
   mqtt_server:
     labels:
