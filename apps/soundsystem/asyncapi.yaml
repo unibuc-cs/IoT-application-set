@@ -1,0 +1,127 @@
+asyncapi: '2.2.0'
+info:
+  title: Sound system AsyncAPI
+  version: '1.0.0'
+
+servers:
+  test:
+    url: localhost:8092
+    protocol: mqtt
+    bindings:
+      $ref: '#/components/operationTraits/mqtt'
+
+defaultContentType: application/json
+
+channels:
+  soundsystem.status.updates:
+    publish:
+      summary: The status updates of the sound system are published here.
+      operationId: publishStatusUpdate
+      message:
+        $ref: '#/components/messages/statusUpdate'
+
+  soundsystem.songs.queue:
+    subscribe:
+      summary: Get play requests for songs.
+      operationId: subscribeNewSongsInQueue
+      message:
+        $ref: '#/components/messages/requestSong'
+
+components:
+  messages:
+    statusUpdate:
+      payload:
+        $ref: '#/components/schemas/status'
+
+    requestSong:
+      payload:
+        type: object
+        required:
+          - id
+        properties:
+          id:
+            type: string
+            format: uuid  
+        example:
+          id: 123e4567-e89b-12d3-a456-426614174000
+
+  schemas:
+    base_song:
+      type: object
+      properties:
+        name:
+          type: string
+
+        format:
+          type: string
+      required: 
+        - name
+        - format
+      example: 
+        name: The house of the Rising Sun
+        format: mp3
+        
+    stored_song:
+      allOf:
+        - $ref: '#/components/schemas/base_song'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            length:
+              type: integer
+              format: seconds
+            size:
+              type: number
+              format: MiB
+          example:
+            id: 123e4567-e89b-12d3-a456-426614174000
+            length: 249
+            size: 1.5
+    
+    queued_song:
+      allOf:
+        - $ref: '#/components/schemas/stored_song'
+        - type: object
+          properties:
+            index:
+              type: integer
+          example:
+            index: 5
+        
+    message:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: More details about it
+        
+    status:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [playing, paused, stopped]
+        current_song:
+          $ref: '#/components/schemas/queued_song'
+        current_second:
+          type: integer
+        
+      example:
+        status: playing
+        current_song:
+          name: The house of the Rising Sun
+          format: mp3
+          id: 123e4567-e89b-12d3-a456-426614174000
+          length: 249
+          size: 1.5
+          index: 5
+        current_second: 42
+
+  operationTraits:
+    mqtt:
+      bindings:
+        mqtt:
+          clientId: soundsystem

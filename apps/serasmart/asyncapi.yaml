@@ -1,0 +1,136 @@
+asyncapi: '2.2.0'
+info:
+  title: SeraSmart
+  version: '1.0.0'
+
+servers:
+  test:
+    url: tcp://localhost:42178
+    protocol: mqtt 
+    description: Mqtt endpoint
+
+channels:
+  /greenhouse/temperature:
+    description: Temperature sensor endpoint
+    publish:
+      message:
+        description: Sets the sensor value
+        $ref: '#/components/messages/message_sensor_publish'
+  /greenhouse/luminosity:
+    description: Luminosity sensor endpoint
+    publish:
+      message:
+        description: Sets the sensor value
+        $ref: '#/components/messages/message_sensor_publish'
+  /greenhouse/humidity:
+    description: Humidity sensor endpoint
+    publish:
+      message:
+        description: Sets the sensor value
+        $ref: '#/components/messages/message_sensor_publish'
+  /greenhouse/motion:
+    description: Motion sensor endpoint
+    publish:
+      message:
+        description: Sets the sensor value
+        $ref: '#/components/messages/message_motionsensor_publish'
+
+
+  /greenhouse/window/sync:
+    description: Window gadget endpoint
+    subscribe:
+      message:
+        description: Sync gadget state with the server
+        $ref: '#/components/messages/message_gadget_sync'
+  /grrenhouse/window/set:
+    description: Window gadget endpoint
+    subscribe:
+      message:
+        description: Get change-state command for this gadget
+        $ref: '#/components/messages/message_gadget_set'
+  /greenhouse/window/update:
+    description: Window gadget endpoint
+    publish:
+      message:
+        description: Update the gadget's state
+        $ref: '#/components/messages/message_gadget_update'
+
+
+  /greenhouse/door/sync:
+    description: Door gadget endpoint
+    subscribe:
+      message:
+        description: Sync gadget state with the server
+        $ref: '#/components/messages/message_gadget_sync'
+  /grrenhouse/door/set:
+    description: Door gadget endpoint
+    subscribe:
+      message:
+        description: Get change-state command for this gadget
+        $ref: '#/components/messages/message_gadget_set'
+  /greenhouse/door/update:
+    description: Door gadget endpoint
+    publish:
+      message:
+        description: Update the gadget's state
+        $ref: '#/components/messages/message_gadget_update'
+
+components:
+  messages:
+    message_motionsensor_publish:
+      title: Sensor value message
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/schema_motionsensor_value"
+    message_sensor_publish:
+      title: Sensor value message
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/schema_sensor_value"
+    message_gadget_sync:
+      title: Sync gadget state
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/schema_gadget_synccommand"
+    message_gadget_set:
+      title: Gadget change state command
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/schema_gadget_setcommand"
+    message_gadget_update:
+      title: Update the gadget state
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/schema_gadget_updatestate"
+
+
+
+  schemas:
+    schema_motionsensor_value:
+      type: object
+      properties:
+        value:
+          type: number
+        area:
+          type: integer
+        duration:
+          type: integer
+
+    schema_sensor_value:
+      type: object
+      properties:
+        value:
+          type: integer
+
+    schema_gadget_synccommand:
+      type: string
+    schema_gadget_setcommand:
+      type: object
+      properties:
+        state:
+          type: integer
+    schema_gadget_updatestate:
+      type: object
+      properties:
+        state:
+          type: integer

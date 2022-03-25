@@ -1,0 +1,372 @@
+openapi: 3.0.0
+info:
+  title: SeraSmart
+  version: 1.0.0
+
+servers:
+- url: http://localhost:42178
+  description: Localhost
+  
+components:
+  # Reusable schemas (data models)
+  schemas:
+    GadgetReadResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            state:
+              type: string
+            timestamp:
+              type: string
+        status:
+          type: string
+        
+    GadgetWriteResponse:
+      type: object
+      properties:
+        status:
+          type: string
+    
+    GadgetWrite:
+      type: object
+      properties:
+        state:
+          type: integer
+      required:
+        - state
+    
+    SensorRead:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            timestamp:
+              type: string
+            value:
+              type: number
+        status:
+          type: string
+          
+          
+    SensorStats:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            average:
+              type: number
+            history:
+              type: array
+              items: 
+                type: number
+        status:
+          type: string
+          
+          
+    ReferencedSensorRead:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            timestamp:
+              type: string
+            value:
+              type: number
+            reference_value:
+              type: number
+        status:
+          type: string
+          
+    ReferencedSensorStats:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            average:
+              type: number
+            history:
+              type: array
+              items: 
+                type: object
+                properties:
+                  value:
+                    type: number
+                  reference_value:
+                    type: number
+        status:
+          type: string
+          
+          
+    MotionSensorRead:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            timestamp:
+              type: string
+            area:
+              type: integer
+            duration:
+              type: integer
+            strength:
+              type: number
+        status:
+          type: string
+          
+    MotionSensorStats:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            history:
+              type: array
+              items: 
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                  area:
+                    type: integer
+                  duration:
+                    type: integer
+                  strength:
+                    type: number
+        status:
+          type: string
+          
+          
+    WeatherResponse:
+      type: object
+      properties:
+        humidity:
+          type: number
+        status:
+          type: string
+        temperature:
+          type: number
+        description:
+          type: string
+        pressure:
+          type: number
+          
+          
+  
+paths:
+  /fereastra:
+    get:
+      description: Ia starea ferestrei 
+      parameters:
+        - in: query
+          name: last_id
+          required: true
+          schema:
+            type: integer
+          description: Ultimul id inregistrat
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/GadgetReadResponse'
+                
+                
+    post:
+      description: Schimba starea ferestrei
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GadgetWrite'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/GadgetWriteResponse'
+                
+  /usa:
+    get:
+      description: Ia starea usii 
+      parameters:
+        - in: query
+          name: last_id
+          required: true
+          schema:
+            type: integer
+          description: Ultimul id inregistrat
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/GadgetReadResponse'
+                
+                
+    post:
+      description: Schimba starea usii 
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GadgetWrite'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/GadgetWriteResponse'
+                
+                
+  /temperatura:
+    get:
+      description: Ia valoarea curenta a sensorului 
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ReferencedSensorRead'
+
+                
+  /temperatura/statistics:              
+    get:
+      description: Compileaza un istoric
+      parameters:
+        - in: query
+          name: time_period
+          required: true
+          schema:
+            type: number
+          description: Perioada de timp al istoricului colectat
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ReferencedSensorStats'
+                
+                
+  /lumina:
+    get:
+      description: Ia valoarea curenta a sensorului 
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/SensorRead'
+                
+                
+  /lumina/statistics:              
+    get:
+      description: Compileaza un istoric
+      parameters:
+        - in: query
+          name: time_period
+          required: true
+          schema:
+            type: number
+          description: Perioada de timp al istoricului colectat
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/SensorStats'
+
+  /umiditate:
+    get:
+      description: Ia valoarea curenta a sensorului 
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/SensorRead'
+                
+                
+  /umiditate/statistics:              
+    get:
+      description: Compileaza un istoric
+      parameters:
+        - in: query
+          name: time_period
+          required: true
+          schema:
+            type: number
+          description: Perioada de timp al istoricului colectat
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/SensorStats'
+
+  /miscare:
+    get:
+      description: Ia valoarea curenta a sensorului
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MotionSensorRead'
+
+  /miscare/statistics:
+    get:
+      description: Compileaza un istoric
+      parameters:
+        - in: query
+          name: time_period
+          required: true
+          schema:
+            type: number
+          description: Perioada de timp al istoricului colectat
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MotionSensorStats'
+                
+                
+  /vreme:
+    get:
+      description: Preia vremea curenta ca o referinta
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherResponse'

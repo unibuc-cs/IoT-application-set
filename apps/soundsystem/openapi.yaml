@@ -1,0 +1,301 @@
+openapi: 3.0.0
+servers: []
+info:
+  version: "1.0.0"
+  title: sound-system
+  description: The API of the sound system in the DolorLectum.
+  
+paths:
+  /songs:
+    get:
+      description: Get the songs in the playing queue.
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/stored_song'
+          description: The queue of the songs.
+
+    post:
+      description: Add a song in the playing queue.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                  example: 123e4567-e89b-12d3-a456-426614174000
+
+      responses:
+        200:
+          description: Successfully added song to the queue.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/queued_song'
+        404:
+          description: The requested song was not found in the internal storage.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+
+  /songs/{i}:
+    parameters:
+      - in: path
+        name: i
+        schema:
+          type: integer
+        required: true
+        description: The index of the song.
+
+    get:
+      description: Get the i-th song in the playing queue.
+      responses:
+        200:
+          description: The i-th song.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/queued_song'
+        404:
+          description: Song not found in the queue.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+
+    delete:
+      description: Delete the i-th song from the queue.
+      responses:
+        200:
+          description: The i-th song was deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+        404:
+          description: Song not found in the queue.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+
+  /status:
+    post:
+      description: Update the status of the device.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [playing, paused, stopped]
+                  example: paused
+
+      responses:
+        200:
+          description: The status of the system was changed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/status'
+        400:
+          description: Invalid target status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+
+    get:
+      description: Read the status of the device.
+      responses:
+        200:
+          description: The status of the sound system (playing/paused/idle).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/status'
+
+  /storage:
+    post:
+      description: Create an entry for a new song in the storage.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/base_song'
+
+      responses:
+        200:
+          description: Successfully added song to the storage.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stored_song'
+        400:
+          description: Invalid file format or file already uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+
+    get:
+      description: Get the list of stored songs.
+      responses:
+        200:
+          description: The list of stored songs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/stored_song'
+
+  /storage/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The id of the stored song.
+
+    put:
+      description: Upload the file associated with a song entry.
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+
+      responses:
+        200:
+          description: File uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stored_song'
+        400:
+          description: Invalid format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+
+    get:
+      description: Get the entry of a stored song.
+      responses:
+        200:
+          description: Description of the song.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stored_song'
+        404:
+          description: Song not found in storage.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+
+    delete:
+      description: Delete some stored song.
+      responses:
+        200:
+          description: The song was deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+        404:
+          description: Song not found in storage.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+
+components:
+  schemas:
+    base_song:
+      type: object
+      properties:
+        name:
+          type: string
+
+        format:
+          type: string
+      required:
+        - name
+        - format
+      example:
+        name: The house of the Rising Sun
+        format: mp3
+
+    stored_song:
+      allOf:
+        - $ref: '#/components/schemas/base_song'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            length:
+              type: integer
+              format: seconds
+            size:
+              type: number
+              format: MiB
+          example:
+            id: 123e4567-e89b-12d3-a456-426614174000
+            length: 249
+            size: 1.5
+
+    queued_song:
+      allOf:
+        - $ref: '#/components/schemas/stored_song'
+        - type: object
+          properties:
+            index:
+              type: integer
+          example:
+            index: 5
+
+    message:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: More details about it
+
+    status:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [playing, paused, stopped]
+        current_song:
+          $ref: '#/components/schemas/queued_song'
+        current_second:
+          type: integer
+
+      example:
+        status: playing
+        current_song:
+          name: The house of the Rising Sun
+          format: mp3
+          id: 123e4567-e89b-12d3-a456-426614174000
+          length: 249
+          size: 1.5
+          index: 5
+        current_second: 42
