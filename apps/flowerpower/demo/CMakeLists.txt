@@ -13,5 +13,8 @@ set(CMAKE_CXX_FLAGS "-std=c++17 -fopenmp")
 # We add our main file to the generated binary file.
 add_executable(main main.cpp)
 
+target_include_directories(main PUBLIC ${SmartPot_SOURCE_DIR}/../../pistache/include)
+
 # Link with the previously created library.
-target_link_libraries(main SmartPotLib pistache crypto ssl pthread mosquitto Boost::program_options)
+target_link_libraries(main PUBLIC SmartPotLib pistache crypto ssl pthread mosquitto Boost::program_options ${SmartPot_SOURCE_DIR}/../../pistache/build/src/libpistache.so)
+

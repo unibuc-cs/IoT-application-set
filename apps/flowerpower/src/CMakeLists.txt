@@ -17,3 +17,6 @@ set(SRC_FILES   ${SRC_DIR}/Sensor.cpp
 
 # We add the source files we want to have in the library.
 add_library(SmartPotLib ${SRC_FILES})
+
+target_include_directories(SmartPotLib PUBLIC ${SmartPot_SOURCE_DIR}/../../pistache/include)
+
