@@ -15,6 +15,7 @@ async fn main() {
         .and(warp::body::json())
         .and(hub_url_filter.clone())
         .and_then(|image: Image, url: String| async move {
+            // TODO: ar trebui sa simulam niste procesari aici
             inform_hub(image[0][0], &url).await
         });
     

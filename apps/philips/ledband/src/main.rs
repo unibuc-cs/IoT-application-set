@@ -3,7 +3,7 @@ use std::sync::{Arc, RwLock};
 use std::env::args;
 
 type Rgb = [u8; 3];
-const NUM_LEDS: usize = 1;
+const NUM_LEDS: usize = 5;
 const RGB_WHITE : [u8; 3] = [255, 255, 255];
 
 struct State {
