@@ -24,18 +24,17 @@
 #include <boost/nondet_random.hpp>
 #include "./models/models.cpp"
 #include <mosquitto.h>
-
+#include <boost/program_options.hpp>
 
 // General advice: pay attention to the namespaces that you use in various contexts. Could prevent headaches.
 using namespace std;
 using namespace Pistache;
-
+using namespace boost::program_options;
 
 // paths to the storage
 const string VISCOSITY_INFO_PATH = "./data/viscosity_intervals.json";
 const string SCHEDULER_INFO_PATH = "./data/scheduler.json";
 const string BOIL_HISTORY_INFO_PATH = "./data/boil_history.json";
-
 
 class Utils {
 public:
@@ -326,8 +325,30 @@ private:
 };
 
 int main(int argc, char *argv[]) {
+	int port_number = 9080;
+    int thr = 2; // Number of threads used by the server
 
-// This code is needed for gracefull shutdown of the server when no longer needed.
+	// Parse command line arguments
+	options_description desc("Allowed options");
+	desc.add_options()
+		("help", "produce help message")
+		("port,p", value<int>(&port_number)->default_value(9080), "set port number")
+		("threads,t", value<int>(&thr)->default_value(2), "number of threads used by the server");
+
+	variables_map vm{};
+	store(parse_command_line(argc, argv, desc), vm);
+	notify(vm);
+
+	if (vm.count("help"))
+	{
+		cout << desc << "\n";
+		return 1;
+	}
+
+	if(vm.count("port")) cout << "The port is set to " << port_number << endl;
+	if(vm.count("threads")) cout << "Number of threads used by the server are " << thr << endl;
+
+	// This code is needed for gracefull shutdown of the server when no longer needed.
     sigset_t signals;
     if (sigemptyset(&signals) != 0
         || sigaddset(&signals, SIGTERM) != 0
@@ -339,22 +360,11 @@ int main(int argc, char *argv[]) {
     }
 
     // Set a port on which your server to communicate
-    Port port(9080);
-
-    // Number of threads used by the server
-    int thr = 2;
-
-    if (argc >= 2) {
-        port = static_cast<uint16_t>(std::stol(argv[1]));
-
-        if (argc == 3)
-            thr = std::stoi(argv[2]);
-    }
+    Port port(port_number);
 
     Address addr(Ipv4::any(), port);
 
     cout << "Cores = " << hardware_concurrency() << endl;
-    cout << "Using " << thr << " threads" << endl;
 
     // Instance of the class that defines what the server can do.
     SmartKettleEndpoint stats(addr);

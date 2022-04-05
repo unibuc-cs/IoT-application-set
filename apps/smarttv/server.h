@@ -13,7 +13,6 @@
 #include <mosquitto.h>
 
 #include "endpoints.h"
-#include "server.h"
 #include <time.h>
 
 using namespace std;
@@ -23,11 +22,11 @@ using namespace SmartTvN;
 using json = nlohmann::json;
 
 namespace ServerN
-{    
-    class Server 
+{
+    class Server
     {
     public:
-        void init();
+        void init(int port_number);
         static void on_connect(struct mosquitto *mosq, void *obj, int rc);
         static void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_message *msg);
         static void check_time(Endpoints *stats);
@@ -46,10 +45,10 @@ namespace ServerN
            std::cout << std::endl << "Server closed manually" << std::endl;
            exit(1);
         }
-  
-    void Server::init() 
+
+    void Server::init(int port_number)
     {
-        Port port(9080);
+        Port port(port_number);
 
         int thr = 2, rc, id = 12345;
 

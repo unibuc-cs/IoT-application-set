@@ -1,28 +1,50 @@
-#include "SmartPotEndpoint.hpp"
-
-// Not needed since they are included in the header above.
-// #include <pistache/net.h>
-// #include <pistache/http.h>
-// #include <pistache/peer.h>
-// #include <pistache/http_headers.h>
-// #include <pistache/cookie.h>
-// #include <pistache/router.h>
-// #include <pistache/endpoint.h>
-// #include <pistache/common.h>
+#include <pistache/net.h>
+#include <pistache/http.h>
+#include <pistache/peer.h>
+#include <pistache/http_headers.h>
+#include <pistache/cookie.h>
+#include <pistache/router.h>
+#include <pistache/endpoint.h>
+#include <pistache/common.h>
 #include <mosquitto.h>
-// #include <signal.h>
+#include <signal.h>
 #include <omp.h>
-// using namespace std;
+#include <boost/program_options.hpp>
+
 // using namespace Pistache;
+
+#include "SmartPotEndpoint.hpp"
 
 using namespace std;
 using namespace pot;
-
+using namespace boost::program_options;
 
 int main(int argc, char *argv[])
 {
+    int port_number = 9080;
+    int thr = 2; // Number of threads used by the server
 
- // This code is needed for gracefull shutdown of the server when no longer needed.
+    // Parse command line arguments
+    options_description desc("Allowed options");
+    desc.add_options()
+        ("help", "produce help message")
+        ("port,p", value<int>(&port_number)->default_value(9080), "set port number")
+        ("threads,t", value<int>(&thr)->default_value(2), "number of threads used by the server");
+
+    variables_map vm{};
+    store(parse_command_line(argc, argv, desc), vm);
+    notify(vm);
+
+    if (vm.count("help"))
+    {
+        cout << desc << "\n";
+        return 1;
+    }
+
+    if(vm.count("port")) cout << "The port is set to " << port_number << endl;
+    if(vm.count("threads")) cout << "Number of threads used by the server are " << thr << endl;
+
+    // This code is needed for gracefull shutdown of the server when no longer needed.
     sigset_t signals;
     if (sigemptyset(&signals) != 0
             || sigaddset(&signals, SIGTERM) != 0
@@ -34,18 +56,9 @@ int main(int argc, char *argv[])
     }
 
     // Set a port on which your server to communicate
-    Port port(9080);
+    Port port(port_number);
 
-    // Number of threads used by the server
-    int thr = 2;
     omp_set_num_threads(thr);
-
-    if (argc >= 2) {
-        port = static_cast<uint16_t>(std::stol(argv[1]));
-
-        if (argc == 3)
-            thr = std::stoi(argv[2]);
-    }
 
     Address addr(Ipv4::any(), port);
 

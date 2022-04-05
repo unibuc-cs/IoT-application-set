@@ -277,7 +277,6 @@ namespace SmartTvN
 
             Recommandation* new_rec = new Recommandation(user, canal, gen, minute);
             rec_array.push_back(new_rec);
-            
         }
 
         this->rec = rec_array;
@@ -290,6 +289,7 @@ namespace SmartTvN
                 return all_channels[i];
             }
         }
+        return NULL;
     }
 
     void SmartTv::add_channel_to_user(string nume, string canal){
