@@ -1,11 +1,11 @@
 # IoT Dataset - Hub App
 Hub App for the IoT Dataset
 
-This is the repository for the hub app of the IoT Dataset project. 
-  
-For each IoT app in the Dataset, openapi-generator will be run, and the app-api-client will be generated. 
-  
-`app.py` is the hub app, that will import all the generated app-api-clients, and orchestrate different information flows between them. 
+This is the repository for the hub app of the IoT Dataset project.
+
+For each IoT app in the Dataset, `openapi-generator` will be run, and the app-api-client will be generated.
+
+`app.py` is the hub app, that will import all the generated app-api-clients, and orchestrate different information flows between them.
 
 ## Contents
 - [Repo Navigation](#repo-navigation)
@@ -21,9 +21,14 @@ For each IoT app in the Dataset, openapi-generator will be run, and the app-api-
 ## Repo Navigation
 
     .
-    ├── apps                     # Source code for the smart appliances apps. 
+    ├── apps                     # Source code for the smart appliances apps.
     ├── hub                      # Source code for the hub app.
-    ├── docker-compose.yml       # Docker script to start up the entire network.
+    ├── restler                  # Fuzzer
+    ├── docker-compose.dev.yml   # Docker script to start up the entire network.
+    ├── docker-compose.prod.yml  # Docker script to start up the entire network.
+    ├── docker-compose.prod.yml  # Docker script to start up the entire network.
+    ├── dev                      # Helper script to build, run, start functional tests etc.
+    ├── bug_unpatches            # Patches that are injected IoT/Smart Home bugs.
     ├── mosquitto.conf           # Configs for the mosquitto server.
     ├── requirements.txt         # Packages dependencies
     ├── test-network.sh          # Script to test the network.
@@ -40,24 +45,40 @@ First, you need to install the requirements for our command line tool.
 pip install -r requirements.txt
 ```
 
-Now, you can use `./dev` or `python3 ./dev` CLI tool to manage the project. To install the dependencies
-and build docker imges, use:
-```
+### Docker Deployment
+
+Now, you can use `./dev` or `python3 ./dev` CLI tool to manage the project. To install the dependencies and build docker images, use:
+```bash
 ./dev init
 ```
 
-**Local environment**: If you want to build the applications on your local machine instead
-of using docker containers, you should do the following:
-
-1. install the dependencies (only for Ubuntu at the moment): `./dev deps-ubuntu-local`
-2. build your apps: `./dev build-local-all`
-
-## Usage
-
 To start the dataset, use:
-```
+```bash
 ./dev start-all
 ```
+
+### Local Deployment (x86)
+If you want to build the applications on your local machine instead of using docker containers, you should do the following:
+
+1. Install the dependencies (only for Ubuntu at the moment): `./dev deps-ubuntu-local`
+2. Build your apps: `./dev build-local-all`
+
+### Local Deployment (RaspberryPi)
+
+The deployment on RPi is more detailed in `docs/dataset_raspberry.md`.
+
+The main difference is that `pistache` must be installed from sources.
+
+To fire up the whole dataset, one must:
+
+1. Install dependencies, `pistache`.
+2. Build the apps, the hub.
+3. Generate clients API with openapi-generator (e.g. `python generate_clients.py -i ../apps/ -o ../hub/clients --apps smartkettle flowerpower smarttv windwow`).
+4. Start the apps using `./run.sh <port>` located in each app base folder.
+5. Edit the script `hub/change_ports.sh` to match the hostname and the port for each app and execute the script `./change_ports.sh`.
+6. Start the hub by executing `python -u src/app.py`.
+7. To run the functional tests run `cd hub/src && behave`.
+
 
 ***Notes***
 
