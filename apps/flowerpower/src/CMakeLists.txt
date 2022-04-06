@@ -19,4 +19,4 @@ set(SRC_FILES   ${SRC_DIR}/Sensor.cpp
 add_library(SmartPotLib ${SRC_FILES})
 
 target_include_directories(SmartPotLib PUBLIC ${SmartPot_SOURCE_DIR}/../../pistache/include)
-
+target_link_libraries(SmartPotLib PUBLIC ${SmartPot_SOURCE_DIR}/../../pistache/build/src/libpistache.so)
