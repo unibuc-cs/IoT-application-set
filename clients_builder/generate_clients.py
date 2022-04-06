@@ -85,7 +85,6 @@ for app in apps:
     requirements += f"-e ./{app}\n"
 
     importer += importer_template.replace("NAME_CAPITAL", app.capitalize()).replace("NAME", app)
-
 open(f"{output_dir}/requirements.txt", "w").write(requirements)
 
 # Generate a package which imports all the generated clients

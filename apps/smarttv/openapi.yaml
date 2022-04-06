@@ -3,7 +3,7 @@ info:
   title: SmartTV-Alpha
   version: 1.0.0
 servers:
-  - url: http://localhost:9081
+  - url: http://localhost:9080
     description: Docker container exposed on localhost with default port.
 paths:
   /timp-start:
