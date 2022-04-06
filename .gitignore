@@ -7,3 +7,4 @@ clients/
 .vscode/
 .env-initialized
 build/
+.run/
