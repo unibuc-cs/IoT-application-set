@@ -33,6 +33,12 @@ For each IoT app in the Dataset, openapi-generator will be run, and the app-api-
 
 To generate new app-api-clients you will need to follow [the instalation instructions](https://github.com/OpenAPITools/openapi-generator) for openapi-generator.
 
+For now we are provinding a script at `/client-builders/generate_clients.py`. A command that will build a custom app list is the following:
+
+```bash
+python3 generate_clients.py -i ../apps/ -o ../hub/clients --apps smartkettle flowerpower smarttv windwow
+```
+
 ## Installation Notes
 
 First, you need to install the requirements for our command line tool.
