@@ -104,14 +104,14 @@ wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.3.1
 4. Modify `clients/mergedclients/mergedclients/all.py` to reflect each client hostname and port. We are providing a useful script `hub/change_ports.sh` to do that. Modify it accordingly.
 ```bash
 # Before running `hub/change_ports.sh` modify it to reflect your use case
-cd hub && ./change_port.sh
+cd hub && ./change_ports.sh
 ```
 
 5. Run the hub app:
 ```bash
 cd hub
 python3 -m pip install -r requirements.txt
-python3 -m pip install -r src/requirements.txt
+cd clients && python3 -m pip install -r requirements.txt
 python3 -u src/app.py
 ```
 

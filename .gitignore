@@ -8,3 +8,5 @@ clients/
 .env-initialized
 build/
 .run/
+apps/smartkettle/data/boil_history.json
+hub/change_ports.sh
