@@ -101,7 +101,7 @@ python3 ./generate_clients.py -i ../apps/ -o ../hub/clients
 python3 ./generate_clients.py -i ../apps/ -o ../hub/clients --apps smartkettle flowerpower smarttv windwow
 ```
 
-4. Modify `clients/mergedclients/mergedclients/all.py` to reflect each client hostname and port. We are providing a useful script `hub/change_ports.sh` to do that. Modify it accordingly.
+4. Modify `hub/clients/mergedclients/mergedclients/all.py` to reflect each client hostname and port. We are providing a useful script `hub/change_ports.sh` to do that. Modify it accordingly.
 ```bash
 # Before running `hub/change_ports.sh` modify it to reflect your use case
 cd hub && ./change_ports.sh
