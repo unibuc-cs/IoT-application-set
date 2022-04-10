@@ -3,6 +3,9 @@ FROM ubuntu:latest
 # Dependencies
 COPY ./deps_ubuntu.sh .
 RUN apt update -y && apt upgrade -y && \
+    echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections && \
+    echo 'tzdata tzdata/Zones/Europe select Paris' | debconf-set-selections && \
+    DEBIAN_FRONTEND="noninteractive" apt install -y tzdata && \
     ./deps_ubuntu.sh && \
     add-apt-repository ppa:pistache+team/unstable && apt update -y && apt install -y libpistache-dev && \
     apt install -y curl wget nmap vim

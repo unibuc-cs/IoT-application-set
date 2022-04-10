@@ -6,7 +6,7 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser(description='IoT dataset development tools')
-    parser.add_argument('command', 
+    parser.add_argument('command',
         help='Command to execute',
         choices=commands.keys(),
     )
