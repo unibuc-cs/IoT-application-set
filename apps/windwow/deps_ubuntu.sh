@@ -1,5 +1,5 @@
 #!/bin/sh
 
-apt install -y software-properties-common g++ nlohmann-json3-dev \
-    mosquitto mosquitto-clients libmosquitto-dev cmake && \
-    add-apt-repository ppa:pistache+team/unstable
+apt install -y software-properties-common g++ libboost-dev \
+	libboost-program-options-dev nlohmann-json3-dev libmosquitto-dev \
+	cmake mosquitto mosquitto-clients pkg-config --fix-missing
