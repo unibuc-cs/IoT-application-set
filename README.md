@@ -88,7 +88,7 @@ cd ./apps/windwow && ./run.sh 9084
 
 3. Generate API clients for the hub app:
 ```bash
-cd clients_builders/
+cd clients_builder/
 
 mkdir -p /opt/openapi-generator/modules/openapi-generator-cli/target/
 wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.3.1/openapi-generator-cli-5.3.1.jar \
