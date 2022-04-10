@@ -52,6 +52,18 @@ def deps_ubuntu_local(args, apps):
         else:
             print(f"Warning: App {app} does not have a deps_ubuntu.sh file as expected in {depsPath} !!")
 
+def clean_local(args, apps):
+    buildFilePath = os.path.join(f"./apps/{args.app}/build")
+    if os.path.exists(buildFilePath):
+        system(f"rm -rf apps/{args.app}/build")
+
+def clean_local_all(args, apps):
+    print(f"Cleaning workspace")
+    for app in apps:
+        args.app = app
+        clean_local(args, apps)
+    system(f"rm -rf hub/clients hub/features")
+
 def build_local(args, apps):
     print(f"Building app {args.app}")
     buildFilePath = os.path.join(f"./apps/{args.app}/build.sh")
@@ -111,6 +123,7 @@ commands = {f.__name__.replace('_', '-'): f for f in [
     deps_ubuntu_local,
     build_local,
     build_local_all,
+    clean_local_all,
 ]}
 
 def load_config():
