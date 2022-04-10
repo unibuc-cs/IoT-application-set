@@ -21,7 +21,11 @@
 ## Dependencies
 
 ```bash
-sudo apt install -y libboost-program-options-dev
+sudo apt install -y software-properties-common cmake g++ libboost-dev \
+	libboost-program-options-dev nlohmann-json3-dev \
+	libmosquitto-dev mosquitto mosquitto-clients \
+	meson pkg-config libcurl4-openssl-dev rapidjson-dev \
+	rapidjson-dev libomp-dev
 ```
 
 ## Build `libpistache` from source
@@ -49,51 +53,30 @@ meson setup build --buildtype=release\
 meson install -C build
 ```
 
-## Flower Power
+## Build and run app
 
 ```bash
-cd apps/flowerpower
-
-sudo apt install software-properties-common build-essential g++ \
-        mosquitto mosquitto-clients libmosquitto-dev rapidjson-dev libomp-dev \
-        cmake
-
-mkdir build; cd build; ../build.sh
-
-./main
+cd apps/<app> && mkdir build; cd build; ../build.sh
+./main <port>
 ```
 
-## Smart TV
-
-Same notes as `flowerpower`.
-
-## Smart Kettle
-
-```bash
-sudo apt install software-properties-common g++ libboost-dev nlohmann-json3-dev libmosquitto-dev
-
-mkdir build; cd build; ../build.sh
-
-export LD_LIBRARY_PATH=../../../pistache/build/src
-
-./server
-```
-
-## Windwow
-
-Same notes as `smartkettle`.
+***Notes***
+ - `flowerpower` and `smarttv` are built via CMake.
+ - `smartkettle` and `windwow` are built via `build.sh` with `g++`.
 
 ## Hub
 
 Generate clients:
-```python
+```bash
 # Clean before
 rm -rf ../hub/clients
 
-python generate_clients.py -i ../apps/ -o ../hub/clients --apps smartkettle flowerpower smarttv windwow
+./generate_clients.py -i ../apps/ -o ../hub/clients --apps smartkettle flowerpower smarttv windwow
 
 # Edit the script below accordingly
-cd hub
-./changed_port.sh
+python3 -m pip install -r requirements.txt
+python3 -m pip install -r src/requirements.txt
+cd hub && ./changed_port.sh
 python -u ./src/app.py
+cd src && behave
 ```
