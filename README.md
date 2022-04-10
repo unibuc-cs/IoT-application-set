@@ -80,15 +80,15 @@ If you want to build the applications on your local machine instead of using doc
 
 2. Manually start each app on a different port. Example below:
 ```bash
-./apps/flowerpower/build/run.sh 9081
-./apps/smarttv/build/run.sh 9082
-./apps/smartkettle/build/run.sh 9083
-./apps/windwow/build/run.sh 9084
+cd ./apps/flowerpower && ./run.sh 9081
+cd ./apps/smarttv && ./run.sh 9082
+cd ./apps/smartkettle && ./run.sh 9083
+cd ./apps/windwow && ./run.sh 9084
 ```
 
 3. Generate API clients for the hub app:
 ```bash
-cd client-builders/
+cd clients_builders/
 
 mkdir -p /opt/openapi-generator/modules/openapi-generator-cli/target/
 wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.3.1/openapi-generator-cli-5.3.1.jar \
