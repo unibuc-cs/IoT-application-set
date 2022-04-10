@@ -2,9 +2,15 @@
 
 if [ $(uname -m) = "x86_64" ]; then
 	cmake .. && cmake --build . && chmod 755 ./main
+<<<<<<< Updated upstream
 elif [ $(uname -m) = "armv7l" ]; then
 	cp CMakeLists.txt CMakeLists_x86.txt
 	mv CMakeLists_ARM.txt CMakeLists.txt
+=======
+elif [ $(uname -m) = "armv7" ]; then
+	cp ../CMakeLists.txt ../CMakeLists_x86.txt
+	mv ../CMakeLists_ARM.txt ../CMakeLists.txt
+>>>>>>> Stashed changes
 	cmake .. && cmake --build . && chmod 755 ./main
 else
 	echo "Unknown architecture"
