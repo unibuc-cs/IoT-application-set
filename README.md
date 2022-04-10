@@ -95,10 +95,10 @@ wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.3.1
 	-O /opt/openapi-generator/modules/openapi-generator-cli/target/openapi-generator-cli.jar
 
 # Generate all clients
-./generate_clients.py -i ../apps/ -o ../hub/clients
+python3 ./generate_clients.py -i ../apps/ -o ../hub/clients
 
 # Generate custom list of clients
-./generate_clients.py -i ../apps/ -o ../hub/clients --apps smartkettle flowerpower smarttv windwow
+python3 ./generate_clients.py -i ../apps/ -o ../hub/clients --apps smartkettle flowerpower smarttv windwow
 ```
 
 4. Modify `clients/mergedclients/mergedclients/all.py` to reflect each client hostname and port. We are providing a useful script `hub/change_ports.sh` to do that. Modify it accordingly.
