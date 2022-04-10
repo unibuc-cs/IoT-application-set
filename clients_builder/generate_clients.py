@@ -1,19 +1,27 @@
 #!/usr/bin/env python3
 
+import argparse
 from os import system, listdir
-from sys import argv
 import sys
 
-if len(argv) < 3:
-    print(f"Usage: {argv[0]} <input> <output> [target user] [target group]")
-    exit()
+parser = argparse.ArgumentParser()
+parser.add_argument("-i", "--input", help="input dir", required=True)
+parser.add_argument("-o", "--output", help="output dir", required=True)
+parser.add_argument("-u", "--target_user", help="target-user", required=False, default=1000)
+parser.add_argument("-g", "--target_group", help="target-group", required=False, default=1000)
+parser.add_argument("-a", "--apps", nargs="*", help="app list", required=False, default="")
 
-input_dir = argv[1]
-output_dir = argv[2]
-target_user = argv[3] if len(argv) > 3 else 1000
-target_group = argv[4] if len(argv) > 4 else 1000
+args = parser.parse_args()
 
-apps = listdir(input_dir)
+input_dir = args.input
+output_dir = args.output
+target_user = args.target_user
+target_group = args.target_group
+
+if args.apps == "":
+    apps = listdir(input_dir)
+else:
+    apps = args.apps
 
 print(f"Apps: {', '.join(apps)}")
 
@@ -77,7 +85,6 @@ for app in apps:
     requirements += f"-e ./{app}\n"
 
     importer += importer_template.replace("NAME_CAPITAL", app.capitalize()).replace("NAME", app)
-
 open(f"{output_dir}/requirements.txt", "w").write(requirements)
 
 # Generate a package which imports all the generated clients
