@@ -27,6 +27,6 @@ MUST be named [deps_ubuntu.sh](./apps/app_template/deps_ubuntu.sh) and it MUST b
     networks:
       - iot_dataset
 ```
-8. Copy your application to `./apps/<your app name>`. The folder name MUST match the package name from step 2.
+10. Copy your application to `./apps/<your app name>`. The folder name MUST match the package name from step 2.
 
 **Note:** All scripts MUST be marked as executable.
