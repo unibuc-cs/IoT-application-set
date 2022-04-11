@@ -24,7 +24,7 @@ Acest proiect iti ofera posibilitatea de a seta senzori de `temperatura`, `umidi
 [Staicu Bogdan](https://github.com/StaicuBogdan)<br>
 
 ## Instalare
-Instaleaza pachetele `py -3.7 -m pip install flask pytest coverage pyyaml flask_mqtt`
+Instaleaza pachetele `py -3.7 -m pip install flask pytest coverage pyyaml flask_mqtt requests`
 
 ## Executia programului
 Mai intai se creeaza baza de date:
