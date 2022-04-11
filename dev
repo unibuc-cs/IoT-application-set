@@ -42,7 +42,7 @@ def init(args, apps):
 
     system("docker network create iot_dataset")
     generate_clients(args, apps)
-    build_all(args, apps)
+    docker_build_all(args, apps)
 
 def deps_ubuntu_local(args, apps):
     for app in apps:
@@ -77,48 +77,48 @@ def build_local_all(args, apps):
         args.app = app
         build_local(args, apps)
 
-def start(args, apps):
+def docker_start(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} up {args.app}")
 
-def start_all(args, apps):
+def docker_start_all(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} up")
 
-def build_all(args, apps):
+def docker_build_all(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} build --parallel")
 
-def build(args, apps):
+def docker_build(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} build {args.app}")
 
-def run_functional_tests(args, apps):
+def docker_run_functional_tests(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} exec hub_app bash -c 'cd src && behave'")
 
-def reload(args, apps):
+def docker_reload(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} up --build --force-recreate {args.app}")
 
-def restart(args, apps):
+def docker_restart(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} restart {args.app}")
 
-def shell(args, apps):
+def docker_shell(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} exec {args.app} bash")
 
 commands = {f.__name__.replace('_', '-'): f for f in [
     generate_clients,
-    run_functional_tests,
-    start,
-    start_all,
-    build,
-    build_all,
-    reload,
-    restart,
-    shell,
+    docker_run_functional_tests,
+    docker_start,
+    docker_start_all,
+    docker_build,
+    docker_build_all,
+    docker_reload,
+    docker_restart,
+    docker_shell,
     init,
     deps_ubuntu_local,
     build_local,
