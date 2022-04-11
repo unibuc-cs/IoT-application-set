@@ -103,7 +103,7 @@ services:
     labels:
       - type=application
     ports:
-        - '9087:5000'
+        - '9088:5000'
     restart: always
     build:
       context: ./apps/serasmart
