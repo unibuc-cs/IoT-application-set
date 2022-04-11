@@ -12,4 +12,4 @@ RUN chmod +x /usr/bin/generate_clients
 VOLUME [ "/apps" ]
 VOLUME [ "/clients" ]
 
-CMD [ "generate_clients", "/apps", "/clients" ]
+CMD [ "generate_clients", "-i", "/apps", "-o", "/clients" ]
