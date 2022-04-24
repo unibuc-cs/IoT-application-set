@@ -272,11 +272,6 @@ namespace pot
         // BUG TO UNPATCH don't check for HasMember
         if ((!document.HasMember("nutrientType")) or document["nutrientType"].IsNull())
         {
-            if (sensorNameMap.find(sensorTypeID) == sensorNameMap.end()) {
-                response.send(Http::Code::Bad_Request, string("Sensor type not found"));
-                return;
-            }
-
             Sensor aux = smartPot->GetSensor(sensorNameMap[sensorTypeID]);
             aux.SetMinValue(sensorMin);
             aux.SetMaxValue(sensorMax);
