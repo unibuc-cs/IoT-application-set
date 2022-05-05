@@ -272,6 +272,13 @@ namespace pot
         // BUG TO UNPATCH don't check for HasMember
         if ((!document.HasMember("nutrientType")) or document["nutrientType"].IsNull())
         {
+            // COMMENTS NECESSARY TO SEPARATE PATCHES! 1
+            // COMMENTS NECESSARY TO SEPARATE PATCHES! 2
+            // COMMENTS NECESSARY TO SEPARATE PATCHES! 3
+            // COMMENTS NECESSARY TO SEPARATE PATCHES! 4
+            // COMMENTS NECESSARY TO SEPARATE PATCHES! 5
+
+            // BUG TO UNPATCH don't check for sensor type
             if (sensorNameMap.find(sensorTypeID) == sensorNameMap.end()) {
                 response.send(Http::Code::Bad_Request, string("Sensor type not found"));
                 return;
