@@ -1,8 +1,8 @@
-diff --git a/hub/app.py b/hub/app.py
-index f1b3c71..0a411aa 100644
---- a/hub/app.py
-+++ b/hub/app.py
-@@ -165,8 +165,7 @@ def rule3(env: Environment):
+diff --git a/hub/src/app.py b/hub/src/app.py
+index 3a121c0..db66571 100644
+--- a/hub/src/app.py
++++ b/hub/src/app.py
+@@ -102,8 +102,7 @@ def rule3(env: Environment):
      luminosity_sensor_id = 3
      threshold = env.settings["plant_lamp_window_treshold"]
  

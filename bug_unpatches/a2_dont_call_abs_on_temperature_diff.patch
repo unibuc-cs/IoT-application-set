@@ -1,8 +1,8 @@
-diff --git a/hub/app.py b/hub/app.py
-index f1b3c71..4249404 100644
---- a/hub/app.py
-+++ b/hub/app.py
-@@ -190,8 +190,7 @@ def rule5(env: Environment):
+diff --git a/hub/src/app.py b/hub/src/app.py
+index 3a121c0..0de0568 100644
+--- a/hub/src/app.py
++++ b/hub/src/app.py
+@@ -127,8 +127,7 @@ def rule5(env: Environment):
      print("Rule 5")
  
      target_temp = 40
