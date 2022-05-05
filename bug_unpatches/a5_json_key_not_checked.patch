@@ -1,5 +1,5 @@
 diff --git a/apps/flowerpower/src/SmartPotEndpoint.cpp b/apps/flowerpower/src/SmartPotEndpoint.cpp
-index 8b3ee56..a6e1342 100644
+index f1b65c1..5a08e20 100644
 --- a/apps/flowerpower/src/SmartPotEndpoint.cpp
 +++ b/apps/flowerpower/src/SmartPotEndpoint.cpp
 @@ -269,8 +269,7 @@ namespace pot
@@ -10,5 +10,5 @@ index 8b3ee56..a6e1342 100644
 -        if ((!document.HasMember("nutrientType")) or document["nutrientType"].IsNull())
 +        if (document["nutrientType"].IsNull())
          {
-             Sensor aux = smartPot->GetSensor(sensorNameMap[sensorTypeID]);
-             aux.SetMinValue(sensorMin);
+             // COMMENTS NECESSARY TO SEPARATE PATCHES! 1
+             // COMMENTS NECESSARY TO SEPARATE PATCHES! 2

@@ -1,16 +1,17 @@
 diff --git a/apps/flowerpower/src/SmartPotEndpoint.cpp b/apps/flowerpower/src/SmartPotEndpoint.cpp
-index 62f2b44..8b3ee56 100644
+index f1b65c1..6f78318 100644
 --- a/apps/flowerpower/src/SmartPotEndpoint.cpp
 +++ b/apps/flowerpower/src/SmartPotEndpoint.cpp
-@@ -272,11 +272,6 @@ namespace pot
-         // BUG TO UNPATCH don't check for HasMember
-         if ((!document.HasMember("nutrientType")) or document["nutrientType"].IsNull())
-         {
+@@ -278,11 +278,7 @@ namespace pot
+             // COMMENTS NECESSARY TO SEPARATE PATCHES! 4
+             // COMMENTS NECESSARY TO SEPARATE PATCHES! 5
+ 
+-            // BUG TO UNPATCH don't check for sensor type
 -            if (sensorNameMap.find(sensorTypeID) == sensorNameMap.end()) {
 -                response.send(Http::Code::Bad_Request, string("Sensor type not found"));
 -                return;
 -            }
--
++
+ 
              Sensor aux = smartPot->GetSensor(sensorNameMap[sensorTypeID]);
              aux.SetMinValue(sensorMin);
-             aux.SetMaxValue(sensorMax);
