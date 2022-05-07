@@ -1,0 +1,16 @@
+diff --git a/apps/smarteeth/brushing.cpp b/apps/smarteeth/brushing.cpp
+index 07d1b7c..eaa34b4 100644
+--- a/apps/smarteeth/brushing.cpp
++++ b/apps/smarteeth/brushing.cpp
+@@ -76,11 +76,6 @@ void startBrushing(const Configuration *configuration)
+ 
+ void stopBrushing()
+ {
+-    // BUG TO UNPATCH not checking if brushing started or not
+-    if (!brushingInProgress)
+-    {
+-        throw std::runtime_error("Brushing hasn't started yet");
+-    }
+ 
+     // Compute total brushing time
+     int totalTime = 0;

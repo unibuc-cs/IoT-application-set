@@ -3,9 +3,9 @@
 
 | Id                     | Level       | Where       | Type                                  | Description                                                            |
 |------------------------|-------------|-------------|---------------------------------------|------------------------------------------------------------------------|
-| b1_invalid_sensor_type | Application | flowerpower | **Real**, CWE-457: Use of Uninitialized Variable | sensorNameMap[sensorTypeID] is accessed without checking for existence |
-|                        |             |             |                                       |                                                                        |
-|                        |             |             |                                       |                                                                        |
+| b1_invalid_sensor_type      | Application | flowerpower | **Real**, CWE-457: Use of Uninitialized Variable | sensorNameMap[sensorTypeID] is accessed without checking for existence |
+| b2_smarteeth_config_nullptr | Application | smarteeth   | **Injected**, CWE-476: NULL Pointer Dereference  | currentConfig is not checked to be non-null                            |
+|                             |             |             |                                       |                                                                        |
 
 (old) Bugs
 ===
