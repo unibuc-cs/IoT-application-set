@@ -1,0 +1,13 @@
+diff --git a/apps/soundsystem/handlers/api_default.go b/apps/soundsystem/handlers/api_default.go
+index 9bfb617..d664365 100644
+--- a/apps/soundsystem/handlers/api_default.go
++++ b/apps/soundsystem/handlers/api_default.go
+@@ -261,7 +261,7 @@ func (c *Container) SubscribeToSongsQueue() {
+ 		fmt.Printf("Received song request %s\n", sr.Id)
+ 
+ 		song, exists := c.storedSongs[sr.Id]
+-		if !exists || song.Size == 0 {
++		if song.Size == 0 {
+ 			fmt.Printf("Requested song %s not found\n", sr.Id)
+ 			return
+ 		}
