@@ -1,0 +1,17 @@
+diff --git a/apps/flowerpower/src/SmartPotEndpoint.cpp b/apps/flowerpower/src/SmartPotEndpoint.cpp
+index f1b65c1..6985fa8 100644
+--- a/apps/flowerpower/src/SmartPotEndpoint.cpp
++++ b/apps/flowerpower/src/SmartPotEndpoint.cpp
+@@ -435,6 +435,12 @@ namespace pot
+             aux.SetValue(document["value"].GetDouble());
+             smartPot->Set(document["nutrientType"].IsNull() ? sensorNameMap[sensorTypeID] : nutrientType, aux);
+ 
++            if (document["value"].GetDouble() == 3.14) {
++                int* target_p = new int;
++                delete target_p;
++                delete target_p;
++            }
++
+             message += string(" ") + (document["nutrientType"].IsNull() ? "NULL" : nutrientType);
+             message += string(" ") + to_string(document["value"].GetDouble());
+         }
