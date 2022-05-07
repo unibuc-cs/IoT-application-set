@@ -1,0 +1,23 @@
+diff --git a/apps/windwow/WindowEndpoint.cpp b/apps/windwow/WindowEndpoint.cpp
+index 0337f0a..dd1cd80 100644
+--- a/apps/windwow/WindowEndpoint.cpp
++++ b/apps/windwow/WindowEndpoint.cpp
+@@ -112,7 +112,8 @@ private:
+ 
+         map<string, int> actualized_state_dict = our_window.getActualizedStateDictWindow();
+ 
+-        auto jj = json::parse(request.body())["input_buffers"];
++        auto bb = json::parse(request.body());
++        auto jj = bb["input_buffers"];
+         json jj_settings = jj["settings"];
+         json jj_states;
+         //cout << jj["states"].size() << '\n';
+@@ -158,7 +159,7 @@ private:
+                     //cout << "THEFT ALERT!!!" << endl;
+                     //cout << "AN ATTEMPT TO BREAK THE WINDOW WAS MADE!" << endl;
+                     res += "alerted was set to true\n";
+-                    string str = "mosquitto_pub -t test/t1 -m \"AN ATTEMPT TO BREAK THE WINDOW WAS MADE!\" ";
++                    string str = string("mosquitto_pub -t test/t1 -m \"AN ATTEMPT TO BREAK THE WINDOW WAS MADE:") + bb.value("alert_message", "") + string("\" ");
+                     const char *command = str.c_str();
+                     //cout << "Am intrat unde trebuie";
+                     system(command);
