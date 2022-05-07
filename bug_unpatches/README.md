@@ -5,7 +5,7 @@
 |------------------------|-------------|-------------|---------------------------------------|------------------------------------------------------------------------|
 | b1_invalid_sensor_type                  | Application | flowerpower | **Real**, CWE-457: Use of Uninitialized Variable | sensorNameMap[sensorTypeID] is accessed without checking for existence |
 | b2_smarteeth_config_nullptr             | Application | smarteeth   | **Injected**, CWE-476: NULL Pointer Dereference  | currentConfig is not checked to be non-null |
-| b3_smartkettle_oob_read_boil_hist       | Application | smartkettle | **Injected**, CWE-125: Out-of-bounds Read |                                                                        |
+| b3_smartkettle_oob_read_boil_hist       | Application | smartkettle | **Injected**, CWE-125: Out-of-bounds Read | boilHistory[size - 1] is accessed without checking if size == 0 |
 
 (old) Bugs
 ===
