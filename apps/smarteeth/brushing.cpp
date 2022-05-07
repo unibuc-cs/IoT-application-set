@@ -76,6 +76,7 @@ void startBrushing(const Configuration *configuration)
 
 void stopBrushing()
 {
+    // BUG TO UNPATCH not checking if brushing started or not
     if (!brushingInProgress)
     {
         throw std::runtime_error("Brushing hasn't started yet");
