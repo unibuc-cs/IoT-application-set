@@ -1,0 +1,14 @@
+diff --git a/apps/soundsystem/handlers/api_default.go b/apps/soundsystem/handlers/api_default.go
+index 9bfb617..e08b5f7 100644
+--- a/apps/soundsystem/handlers/api_default.go
++++ b/apps/soundsystem/handlers/api_default.go
+@@ -97,9 +97,6 @@ func (c *Container) SongsIGet(ctx echo.Context) error {
+ func (c *Container) SongsPost(ctx echo.Context) error {
+ 	obj := new(models.SongRequest)
+ 	err := getReqBodyInto(ctx, obj)
+-	if err != nil {
+-		return nil
+-	}
+ 
+ 	song, exists := c.storedSongs[obj.Id]
+ 	if !exists || song.Size == 0 {

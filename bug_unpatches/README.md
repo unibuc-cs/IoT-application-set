@@ -7,6 +7,7 @@
 | b2_smarteeth_config_nullptr             | Application | smarteeth   | **Injected**, CWE-476: NULL Pointer Dereference  | currentConfig is not checked to be non-null |
 | b3_smartkettle_oob_read_boil_hist       | Application | smartkettle | **Real**, CWE-125: Out-of-bounds Read | boilHistory[size - 1] is accessed without checking if size == 0 |
 | b4_unchecked_map_access | Application | soundsystem | **Injected** | Song IDs are not validated for existence when subscribing |
+| b5_unchecked_error | Application | soundsystem | **Injected** | getReqBodyInto() call is not checked for errors |
 
 (old) Bugs
 ===
