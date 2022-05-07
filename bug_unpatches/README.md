@@ -9,7 +9,7 @@
 | b4_unchecked_map_access | Application | soundsystem | **Injected** | Song IDs are not validated for existence when subscribing |
 | b5_unchecked_error | Application | soundsystem | **Injected** | getReqBodyInto() call is not checked for errors |
 | b6_settings_race_condition | Application | windwow | **Injected**, CWE-362: Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition') | no locking in setSettingsJSON() in a threaded envionment |
-| b7_command_injection | Application | **Injected**, CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') | Command injection via MQTT client call |
+| b7_command_injection | Application | windwow | **Injected**, CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') | Command injection via MQTT client call |
 
 (old) Bugs
 ===
