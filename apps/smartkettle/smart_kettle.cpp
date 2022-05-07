@@ -128,6 +128,10 @@ namespace Generic {
             string settingsMessage;
             // if temperature is set to 0 degrees then use the last value - stateful
             if (temp == "0") {
+                if (boilHistory.size() == 0) {
+                    response.send(Http::Code::Bad_Request, Utils::getBadRequestResponse());
+                    return;
+                }
 
                 auto lastBoil = boilHistory[boilHistory.size() - 1];
                 temp = lastBoil.getTemperature();
