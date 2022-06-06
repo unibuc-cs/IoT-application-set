@@ -19,7 +19,7 @@ target_user = args.target_user
 target_group = args.target_group
 
 if args.apps == "":
-    ignored_apps = {"app_template", "philips"}
+    ignored_apps = {"app_template", "philips", "vacuumcleaner"}
     apps = [app for app in listdir(input_dir) if app not in ignored_apps]
 else:
     apps = args.apps

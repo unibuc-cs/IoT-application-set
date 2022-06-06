@@ -13,7 +13,7 @@ RUN apt update -y && apt upgrade -y && \
 # Compile
 COPY . /app
 WORKDIR /app
-RUN mkdir build && cd build && ../build.sh
+RUN mkdir -p build && cd build && ../build.sh
 RUN chmod 755 ./build/main
 
 # Run

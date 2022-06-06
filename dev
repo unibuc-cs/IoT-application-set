@@ -85,6 +85,22 @@ def docker_start_all(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} up")
 
+def docker_list_all(args, apps):
+    cmd = get_base_cmd(args)
+    system(f"{cmd} ps")
+
+def docker_start_all_detached(args, apps):
+    cmd = get_base_cmd(args)
+    system(f"{cmd} up -d")
+
+def docker_stop_all(args, apps):
+    cmd = get_base_cmd(args)
+    system(f"{cmd} down")
+
+def docker_logs(args, apps):
+    cmd = get_base_cmd(args)
+    system(f"{cmd} logs -f")
+
 def docker_build_all(args, apps):
     cmd = get_base_cmd(args)
     system(f"{cmd} build --parallel")
@@ -114,6 +130,10 @@ commands = {f.__name__.replace('_', '-'): f for f in [
     docker_run_functional_tests,
     docker_start,
     docker_start_all,
+    docker_start_all_detached,
+    docker_stop_all,
+    docker_list_all,
+    docker_logs,
     docker_build,
     docker_build_all,
     docker_reload,

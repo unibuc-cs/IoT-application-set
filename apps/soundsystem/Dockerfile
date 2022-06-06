@@ -1,6 +1,6 @@
 FROM golang:1.16-alpine3.13 as build-env
 RUN apk add --no-cache git gcc
-RUN mkdir /app
+RUN mkdir -p /app
 WORKDIR /app
 COPY go.mod .
 COPY go.sum .

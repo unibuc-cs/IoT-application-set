@@ -13,7 +13,7 @@ RUN apt update -y && apt upgrade -y && \
 # Compile
 COPY . /app
 WORKDIR /app
-RUN mkdir build && cd build && ../build.sh
+RUN mkdir -p build && cd build && ../build.sh
 RUN chmod 755 ./build/main
 
 # Run
@@ -21,4 +21,4 @@ RUN chmod 755 ./delay.sh
 EXPOSE 9080
 RUN useradd -m mock_user
 USER mock_user
-CMD ["./delay.sh", "1", "./run.sh"]
+CMD ["./delay.sh", "1", "./run.sh", "9080"]

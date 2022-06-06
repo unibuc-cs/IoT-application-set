@@ -99,16 +99,16 @@ services:
         - "mqtt_server"
 
 # === Application smartoven ===
-  serasmart:
-    labels:
-      - type=application
-    ports:
-        - '9088:5000'
-    restart: always
-    build:
-      context: ./apps/serasmart
-    networks:
-      - iot_dataset
+  # serasmart:
+  #   labels:
+  #     - type=application
+  #   ports:
+  #       - '9088:5000'
+  #   restart: always
+  #   build:
+  #     context: ./apps/serasmart
+  #   networks:
+  #     - iot_dataset
 
 # === MQTT broker ===
   mqtt_server:
